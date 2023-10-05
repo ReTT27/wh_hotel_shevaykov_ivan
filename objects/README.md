@@ -2,8 +2,21 @@
 
 
 
-### Схемы для использования в проекте
+# Схемы для использования в проекте
+### Схема public
 ```sql
 CREATE SCHEMA IF NOT EXISTS public;
 ```
-Схема public используется для хранения общих функций или сведенье об отеле.
+Схема public используется для хранения общих функций и сведенье об отеле.
+
+### Схема customerresources
+```sql
+CREATE SCHEMA IF NOT EXISTS customerresources;
+```
+Схема customerresources используется для хранения функций и сведений связанных с гостями отеля.
+
+### Схема customerresources
+```sql
+CREATE SCHEMA IF NOT EXISTS history;
+```
+Схема history используется для историчности сведений связанных с отелем.
