@@ -32,5 +32,3 @@ CREATE TABLE IF NOT EXISTS customerresources.guestloyalty
     CONSTRAINT uq_guest_loyalty UNIQUE (id_guest, id_loyalty)
 );
 ```
-
-# Функции
