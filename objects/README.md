@@ -15,7 +15,7 @@ CREATE SCHEMA IF NOT EXISTS customerresources;
 ```
 Схема customerresources используется для хранения функций и сведений связанных с гостями отеля.
 
-### Схема customerresources
+### Схема history
 ```sql
 CREATE SCHEMA IF NOT EXISTS history;
 ```
