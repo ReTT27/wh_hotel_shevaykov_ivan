@@ -7,5 +7,5 @@ CREATE TABLE IF NOT EXISTS customerresources.guestloyalty
     date_registration TIMESTAMPTZ NOT NULL,
     date_use          TIMESTAMPTZ NOT NULL,
     is_actual         BOOLEAN     NOT NULL,
-    CONSTRAINT uq_guest_loyalty UNIQUE (guest_id, loyalty_id)
+    CONSTRAINT uq_guestloyalty_guest_loyalty UNIQUE (guest_id, loyalty_id)
 );
