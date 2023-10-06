@@ -4,7 +4,7 @@
 
 # Таблицы
 ### Таблица персонала
-Данная таблица хранит данные о персонале: ФИО, номер телефона, электронная почта, номер должности, дополнительное денежное вознагрождение(премия).
+Данная таблица хранит данные о персонале: ФИО, номер телефона, электронная почта, номер должности, дополнительное денежное вознагрождение(премия), на работе ли сотрудник.
 ```sql
 CREATE TABLE IF NOT EXISTS hotel.employee
 (
@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS hotel.employee
     phone       VARCHAR(11) NOT NULL,
     email       VARCHAR(32) NOT NULL,
     post_id     SMALLINT    NOT NULL,
-    reward      INT         NOT NULL
+    reward      INT         NOT NULL,
+    work        BOOLEAN     NOT NULL
 );
 ```
 
@@ -38,6 +39,7 @@ CREATE TABLE IF NOT EXISTS hotel.reservation
 (
     reservation_id SERIAL      NOT NULL
         CONSTRAINT pk_reservation PRIMARY KEY,
+    guest_id       INT         NOT NULL,
     room_id        SMALLINT    NOT NULL,
     dt_entry       TIMESTAMPTZ NOT NULL,
     dt_exit        TIMESTAMPTZ NOT NULL
@@ -65,7 +67,6 @@ CREATE TABLE IF NOT EXISTS hotel.sales
     sale_id        SERIAL   NOT NULL
         CONSTRAINT pk_sales PRIMARY KEY,
     employee_id    INT      NOT NULL,
-    guest_id       INT      NOT NULL,
     visitors       JSONB,
     reservation_id INT      NOT NULL,
     typefeed_id    SMALLINT NOT NULL,

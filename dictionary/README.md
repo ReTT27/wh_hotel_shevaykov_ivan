@@ -8,10 +8,11 @@
 ```sql
 CREATE TABLE IF NOT EXISTS dictionary.post
 (
-    post_id SMALLSERIAL NOT NULL
+    post_id     SMALLSERIAL NOT NULL
         CONSTRAINT pk_post PRIMARY KEY,
-    name    VARCHAR(64) NOT NULL,
-    salary  INT         NOT NULL
+    name        VARCHAR(64) NOT NULL,
+    timeline_id SMALLINT    NOT NULL,
+    salary      INT         NOT NULL
 );
 ```
 
@@ -42,12 +43,23 @@ CREATE TABLE IF NOT EXISTS dictionary.typerooms
 ```
 
 ### Таблица типов оплаты
-Данная таблица хранит данные о категоряих отзывов от гостей отеля: название вида оплаты
+Данная таблица хранит данные о типах оплаты гостей: название вида оплаты
 ```sql
 CREATE TABLE IF NOT EXISTS dictionary.typepayment
 (
     payment_id SMALLSERIAL NOT NULL
         CONSTRAINT pk_typepayment PRIMARY KEY,
     name       VARCHAR(32) NOT NULL
+);
+```
+
+### Таблица графиков работы
+Данная таблица хранит данные о графиков работы: название графика работы
+```sql
+CREATE TABLE IF NOT EXISTS dictionary.typetimeline
+(
+    timeline_id SMALLSERIAL NOT NULL
+        CONSTRAINT pk_typetimeline PRIMARY KEY,
+    name        VARCHAR(32) NOT NULL
 );
 ```

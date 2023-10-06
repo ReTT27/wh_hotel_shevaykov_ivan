@@ -6,5 +6,6 @@ CREATE TABLE IF NOT EXISTS hotel.employee
     phone       VARCHAR(11) NOT NULL,
     email       VARCHAR(32) NOT NULL,
     post_id     SMALLINT    NOT NULL,
-    reward      INT         NOT NULL
+    reward      INT         NOT NULL,
+    work        BOOLEAN     NOT NULL
 );

@@ -1,7 +1,8 @@
 CREATE TABLE IF NOT EXISTS dictionary.post
 (
-    post_id SMALLSERIAL NOT NULL
+    post_id     SMALLSERIAL NOT NULL
         CONSTRAINT pk_post PRIMARY KEY,
-    name    VARCHAR(64) NOT NULL,
-    salary  INT         NOT NULL
+    name        VARCHAR(64) NOT NULL,
+    timeline_id SMALLINT    NOT NULL,
+    salary      INT         NOT NULL
 );
