@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS customerresources.guest
 (
-    guest_id  BIGSERIAL   NOT NULL
+    guest_id  SERIAL      NOT NULL
         CONSTRAINT pk_guest PRIMARY KEY,
     name      VARCHAR(64) NOT NULL,
     phone     VARCHAR(11) NOT NULL,

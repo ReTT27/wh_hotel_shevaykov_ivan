@@ -32,12 +32,13 @@ CREATE TABLE IF NOT EXISTS hotel.cleaning
 ```
 
 ### Таблица брони
-Данная таблица хранит данные о брони гостиничного номера: дата въезда, дата выезда.
+Данная таблица хранит данные о брони гостиничного номера: индивидуальный номер гостиничного номера, дата въезда, дата выезда.
 ```sql
 CREATE TABLE IF NOT EXISTS hotel.reservation
 (
-    reservation_id BIGSERIAL   NOT NULL
+    reservation_id SERIAL      NOT NULL
         CONSTRAINT pk_reservation PRIMARY KEY,
+    room_id        SMALLINT    NOT NULL,
     dt_entry       TIMESTAMPTZ NOT NULL,
     dt_exit        TIMESTAMPTZ NOT NULL
 );
@@ -57,17 +58,30 @@ CREATE TABLE IF NOT EXISTS hotel.rooms
 ```
 
 ### Таблица продаж
-Данная таблица хранит данные о продажах: индивидуальный номер гостиничного номера, индивидуальный номер сотрудника, индивидуальный номер гостя, ФИО заселяющихся людей вместе с гостем (если есть), индивидуальный номер брони, тип питания.
+Данная таблица хранит данные о продажах: индивидуальный номер сотрудника, индивидуальный номер гостя, ФИО заселяющихся людей вместе с гостем (если есть), индивидуальный номер брони, тип питания, индивидуальный номер отзыва, индивидуальный номер вида оплаты.
 ```sql
 CREATE TABLE IF NOT EXISTS hotel.sales
 (
-    sale_id        BIGSERIAL NOT NULL
+    sale_id        SERIAL   NOT NULL
         CONSTRAINT pk_sales PRIMARY KEY,
-    room_id        SMALLINT  NOT NULL,
-    employee_id    INT       NOT NULL,
-    guest_id       BIGINT    NOT NULL,
+    employee_id    INT      NOT NULL,
+    guest_id       INT      NOT NULL,
     visitors       JSONB,
-    reservation_id BIGINT    NOT NULL,
-    typefeed_id    SMALLINT  NOT NULL
+    reservation_id INT      NOT NULL,
+    typefeed_id    SMALLINT NOT NULL,
+    review_id      INT,
+    payment_id     SMALLINT NOT NULL
+);
+```
+
+### Таблица отзывов
+Данная таблица хранит данные об отзывах: категория отзыва (положительный или отрицательный), содержание отзыва.
+```sql
+CREATE TABLE IF NOT EXISTS hotel.reviews
+(
+    review_id SERIAL       NOT NULL
+        CONSTRAINT pk_reviews PRIMARY KEY,
+    category  VARCHAR(16)  NOT NULL,
+    content   VARCHAR(500) NOT NULL
 );
 ```

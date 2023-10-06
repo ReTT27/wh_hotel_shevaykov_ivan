@@ -40,3 +40,14 @@ CREATE TABLE IF NOT EXISTS dictionary.typerooms
     cost         INT         NOT NULL
 );
 ```
+
+### Таблица типов оплаты
+Данная таблица хранит данные о категоряих отзывов от гостей отеля: название вида оплаты
+```sql
+CREATE TABLE IF NOT EXISTS dictionary.typepayment
+(
+    payment_id SMALLSERIAL NOT NULL
+        CONSTRAINT pk_typepayment PRIMARY KEY,
+    name       VARCHAR(32) NOT NULL
+);
+```

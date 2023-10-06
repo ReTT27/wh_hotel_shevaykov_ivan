@@ -1,11 +1,12 @@
 CREATE TABLE IF NOT EXISTS hotel.sales
 (
-    sale_id        BIGSERIAL NOT NULL
+    sale_id        SERIAL   NOT NULL
         CONSTRAINT pk_sales PRIMARY KEY,
-    room_id        SMALLINT  NOT NULL,
-    employee_id    INT       NOT NULL,
-    guest_id       BIGINT    NOT NULL,
+    employee_id    INT      NOT NULL,
+    guest_id       INT      NOT NULL,
     visitors       JSONB,
-    reservation_id BIGINT    NOT NULL,
-    typefeed_id    SMALLINT  NOT NULL
+    reservation_id INT      NOT NULL,
+    typefeed_id    SMALLINT NOT NULL,
+    review_id      INT,
+    payment_id     SMALLINT NOT NULL
 );
