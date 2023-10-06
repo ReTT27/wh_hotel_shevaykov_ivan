@@ -20,3 +20,15 @@ CREATE SCHEMA IF NOT EXISTS customerresources;
 CREATE SCHEMA IF NOT EXISTS history;
 ```
 Схема history используется для историчности сведений связанных с отелем.
+
+### Схема dictionary
+```sql
+CREATE SCHEMA IF NOT EXISTS dictionary;
+```
+Схема dictionary является словарем.
+
+### Схема hotel
+```sql
+CREATE SCHEMA IF NOT EXISTS hotel;
+```
+Схема hotel используется для сведений происходящих в отеле.
