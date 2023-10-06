@@ -2,6 +2,21 @@
 
 
 
+# Таблицы
+### Таблица информации об отеле
+Данная таблица хранит данные об изменениях в отеле: название отеля, адрес отеля, этажей в отеле, номеров в отеле, владелец отеля.
+```sql
+CREATE TABLE IF NOT EXISTS public.hotelinfo
+(
+    id_settings SMALLSERIAL  NOT NULL
+        CONSTRAINT pk_hotelinfo PRIMARY KEY,
+    name        VARCHAR(64)  NOT NULL,
+    address     VARCHAR(128) NOT NULL,
+    floor       SMALLINT     NOT NULL,
+    rooms       SMALLINT     NOT NULL,
+    owner       VARCHAR(64)  NOT NULL
+);
+```
 # Функции
 ### Функция вывода ошибки
 Функция ошибки используется для вывода неккоректных данных в различных ситуациях.
@@ -23,18 +38,4 @@ BEGIN
     RETURN JSONB_OBJECT_AGG('errors', _errors)::JSONB;
 END;
 $$;
-```
-
-# Таблицы
-### Таблица информации об отеле
-Данная таблица хранит данные об изменениях в отеле: название отеля, адрес отеля, владелец отеля.
-```sql
-CREATE TABLE IF NOT EXISTS public.hotelinfo
-(
-    id_settings SMALLSERIAL  NOT NULL
-        CONSTRAINT pk_hotelinfo PRIMARY KEY,
-    name        VARCHAR(64)  NOT NULL,
-    address     VARCHAR(128) NOT NULL,
-    owner       VARCHAR(64)  NOT NULL
-);
 ```

@@ -4,5 +4,7 @@ CREATE TABLE IF NOT EXISTS public.hotelinfo
         CONSTRAINT pk_hotelinfo PRIMARY KEY,
     name        VARCHAR(64)  NOT NULL,
     address     VARCHAR(128) NOT NULL,
+    floor       SMALLINT     NOT NULL,
+    rooms       SMALLINT     NOT NULL,
     owner       VARCHAR(64)  NOT NULL
 );
