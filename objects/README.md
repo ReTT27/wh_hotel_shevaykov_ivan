@@ -31,4 +31,4 @@ CREATE SCHEMA IF NOT EXISTS dictionary;
 ```sql
 CREATE SCHEMA IF NOT EXISTS hotel;
 ```
-Схема hotel используется для сведений происходящих в отеле.
+Схема hotel используется для хранения функций и сведений происходящих в отеле.
