@@ -4,7 +4,7 @@
 
 # Таблицы
 ### Таблица персонала
-Данная таблица хранит данные о персонале: ФИО, номер телефона, электронная почта, номер должности, дополнительное денежное вознагрождение(премия), на работе ли сотрудник.
+Данная таблица хранит данные о персонале: ФИО, номер телефона, электронная почта, номер должности, дополнительное денежное вознагрождение(премия), индивидуальный номер пропуска сотрудника.
 ```sql
 CREATE TABLE IF NOT EXISTS hotel.employee
 (
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS hotel.employee
     email       VARCHAR(32) NOT NULL,
     post_id     SMALLINT    NOT NULL,
     reward      INT         NOT NULL,
-    work        BOOLEAN     NOT NULL
+    pass_id     INT         NOT NULL
 );
 ```
 
@@ -84,5 +84,18 @@ CREATE TABLE IF NOT EXISTS hotel.reviews
         CONSTRAINT pk_reviews PRIMARY KEY,
     category  VARCHAR(16)  NOT NULL,
     content   VARCHAR(500) NOT NULL
+);
+```
+
+### Таблица пропусков сотрудников
+Данная таблица хранит данные о пропусках сотрудников: дата входа сотрудника в отель, дата выхода сотрудника из отеля, на работе ли сотрудник.
+```sql
+CREATE TABLE IF NOT EXISTS hotel.pass
+(
+    pass_id   INT         NOT NULL
+        CONSTRAINT pk_pass PRIMARY KEY,
+    dt_input  TIMESTAMPTZ NOT NULL,
+    dt_output TIMESTAMPTZ NOT NULL,
+    work      BOOLEAN     NOT NULL
 );
 ```
