@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS dictianory.typefeed
+CREATE TABLE IF NOT EXISTS dictionary.typefeed
 (
     typefeed_id SMALLSERIAL   NOT NULL
         CONSTRAINT pk_typefeed PRIMARY KEY,

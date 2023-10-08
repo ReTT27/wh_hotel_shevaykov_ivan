@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS dictionary.post
 |       name       |   VARCHAR   | Тип питания                       |
 |       cost       |   NUMERIC   | Стоимость питания за сутки        |
 ```sql
-CREATE TABLE IF NOT EXISTS dictianory.typefeed
+CREATE TABLE IF NOT EXISTS dictionary.typefeed
 (
     typefeed_id SMALLSERIAL   NOT NULL
         CONSTRAINT pk_typefeed PRIMARY KEY,
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS dictionary.typepayment
 ```
 
 ### Таблица графиков работы
-Данная таблица хранит данные о графиков работы.  
+Данная таблица хранит данные о графиков работы.
 
 | Название столбца | Тип данных  | Описание                                 |
 |:----------------:|:-----------:|:-----------------------------------------|

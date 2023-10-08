@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS hotel.sales
 | Название столбца | Тип данных | Описание                                           |
 |:----------------:|:----------:|:---------------------------------------------------|
 |    review_id     |   SERIAL   | Индивидуальный номер отзыва                        |
-|     category     |  VARCHAR   | Категория отзыва (Положительный или отрицательный) |
+|     category     |  VARCHAR   | Категория отзыва (положительный или отрицательный) |
 |     content      |  VARCHAR   | Содержание отзыва                                  |
 ```sql
 CREATE TABLE IF NOT EXISTS hotel.reviews
@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS hotel.reviews
 |     pass_id      |     INT     | Индивидуальный номер пропуска  |
 |     dt_input     | TIMESTAMPTZ | Дата входа сотрудника в отель  |
 |    dt_output     | TIMESTAMPTZ | Дата выхода сотрудника в отель |
-|       work       |   BOOLEAN   | На работа ли сотрудник         |
+|       work       |   BOOLEAN   | На работе ли сотрудник         |
 ```sql
 CREATE TABLE IF NOT EXISTS hotel.pass
 (
