@@ -17,23 +17,4 @@
 
 # Функции
 ### Функция вывода ошибки
-Функция ошибки используется для вывода неккоректных данных в различных ситуациях.
-```sql
-CREATE OR REPLACE FUNCTION public.errmessage(_errcode VARCHAR, _msg VARCHAR, _detail VARCHAR) RETURNS JSONB
-    LANGUAGE plpgsql
-AS
-$$
-DECLARE
-    _errors JSONB;
-BEGIN
-    SELECT JSONB_AGG(ROW_TO_JSON(s))
-    FROM (
-        SELECT _errcode error,
-               _msg     message,
-               _detail  detail) s
-    INTO _errors;
-
-    RETURN JSONB_OBJECT_AGG('errors', _errors)::JSONB;
-END;
-$$;
-```
+Функция ошибки errmessage(_errcode VARCHAR, _msg VARCHAR, _detail VARCHAR) используется для вывода некорректных данных в различных ситуациях.
