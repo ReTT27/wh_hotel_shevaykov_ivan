@@ -4,5 +4,5 @@ CREATE TABLE IF NOT EXISTS hotel.pass
         CONSTRAINT pk_pass PRIMARY KEY,
     dt_input  TIMESTAMPTZ NOT NULL,
     dt_output TIMESTAMPTZ NOT NULL,
-    work      BOOLEAN     NOT NULL
+    at_work   BOOLEAN     NOT NULL
 );
