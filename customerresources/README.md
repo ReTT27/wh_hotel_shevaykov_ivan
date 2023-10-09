@@ -13,17 +13,6 @@
 |      phone       |  VARCHAR   | Номер телефона             |
 |      email       |  VARCHAR   | Электронная почта          |
 |    birth_day     |    DATE    | День рождения              |
-```sql
-CREATE TABLE IF NOT EXISTS customerresources.guest
-(
-    guest_id  SERIAL      NOT NULL
-        CONSTRAINT pk_guest PRIMARY KEY,
-    name      VARCHAR(64) NOT NULL,
-    phone     VARCHAR(11) NOT NULL,
-    email     VARCHAR(32) NOT NULL,
-    birth_day DATE        NOT NULL
-);
-```
 
 ### Таблица программы лояльности гостей
 Данная таблица хранит данные о программе лояльности гостей.  
@@ -36,15 +25,3 @@ CREATE TABLE IF NOT EXISTS customerresources.guest
 | date_registration | TIMESTAMPTZ | Дата регистрации карты        |
 |     date_use      | TIMESTAMPTZ | Дата последнего использования |
 |     is_actual     |   BOOLEAN   | Актуальность карты            |
-```sql
-CREATE TABLE IF NOT EXISTS customerresources.guestloyalty
-(
-    loyalty_id        SERIAL      NOT NULL
-        CONSTRAINT pk_guestloyalty PRIMARY KEY,
-    guest_id          INT         NOT NULL,
-    cashback_points   INT         NOT NULL,
-    date_registration TIMESTAMPTZ NOT NULL,
-    date_use          TIMESTAMPTZ NOT NULL,
-    is_actual         BOOLEAN     NOT NULL
-);
-```
