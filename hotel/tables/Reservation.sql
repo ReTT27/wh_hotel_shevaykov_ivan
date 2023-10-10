@@ -6,5 +6,7 @@ CREATE TABLE IF NOT EXISTS hotel.reservation
     guest_id       INT         NOT NULL,
     dt_entry       TIMESTAMPTZ NOT NULL,
     dt_exit        TIMESTAMPTZ NOT NULL,
-    is_complete    BOOLEAN     NOT NULL
+    is_complete    BOOLEAN     NOT NULL,
+    ch_employee    INT         NOT NULL,
+    dt_ch          TIMESTAMPTZ NOT NULL
 );
