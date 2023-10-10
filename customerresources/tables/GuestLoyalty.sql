@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS customerresources.guestloyalty
 (
-    loyalty_id      SERIAL      NOT NULL
+    card_id         SERIAL      NOT NULL
         CONSTRAINT pk_guestloyalty PRIMARY KEY,
     guest_id        INT         NOT NULL,
     cashback_points INT         NOT NULL,

@@ -6,6 +6,5 @@ CREATE TABLE IF NOT EXISTS hotel.sales
     visitors       JSONB,
     reservation_id INT      NOT NULL,
     typefeed_id    SMALLINT NOT NULL,
-    review_id      INT,
-    payment_id     SMALLINT NOT NULL
+    review_id      INT
 );
