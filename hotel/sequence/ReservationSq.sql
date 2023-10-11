@@ -1,0 +1,1 @@
+CREATE SEQUENCE IF NOT EXISTS hotel.reservationsq AS INT START WITH 1;

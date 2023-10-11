@@ -1,0 +1,1 @@
+CREATE SEQUENCE IF NOT EXISTS hotel.cleaningthingsq AS INT START WITH 1;
