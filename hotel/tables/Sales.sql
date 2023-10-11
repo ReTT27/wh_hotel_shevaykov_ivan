@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS hotel.sales
 (
-    sale_id        SERIAL      NOT NULL
+    sale_id        INT         NOT NULL
         CONSTRAINT pk_sales PRIMARY KEY,
     employee_id    INT         NOT NULL,
     visitors       JSONB,
@@ -8,5 +8,6 @@ CREATE TABLE IF NOT EXISTS hotel.sales
     typefeed_id    SMALLINT    NOT NULL,
     review_id      INT,
     ch_employee    INT         NOT NULL,
-    dt_ch          TIMESTAMPTZ NOT NULL
+    dt_ch          TIMESTAMPTZ NOT NULL,
+    CONSTRAINT uq_sales_reservation_sale_review UNIQUE (reservation_id, sale_id, review_id)
 );

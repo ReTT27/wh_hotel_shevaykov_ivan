@@ -1,0 +1,1 @@
+CREATE SEQUENCE IF NOT EXISTS customerresources.guestsq AS INT START WITH 1;
