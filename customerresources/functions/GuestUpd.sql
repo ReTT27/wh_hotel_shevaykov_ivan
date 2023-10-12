@@ -13,7 +13,7 @@ DECLARE
     _dt_ch     TIMESTAMPTZ := now() AT TIME ZONE 'Europe/Moscow';
 BEGIN
 
-    SELECT COALESCE(g.guest_id, nextval('customerresources.guestsq')) as guest_id,
+    SELECT COALESCE(g.guest_id, nextval('customerresources.guestsq')) AS guest_id,
            s.name,
            s.phone,
            s.email,
