@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS dictionary.typefeed
 (
-    typefeed_id SMALLSERIAL   NOT NULL
+    typefeed_id SMALLINT      NOT NULL
         CONSTRAINT pk_typefeed PRIMARY KEY,
     name        VARCHAR(32)   NOT NULL,
     content     VARCHAR(128)  NOT NULL,
