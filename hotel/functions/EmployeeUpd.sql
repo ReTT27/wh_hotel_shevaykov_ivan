@@ -15,7 +15,7 @@ DECLARE
     _is_del      BOOLEAN     := FALSE;
 BEGIN
 
-    SELECT COALESCE(e.employee_id, nextval('hotel.employeesq')) as card_id,
+    SELECT COALESCE(e.employee_id, nextval('hotel.employeesq')) AS card_id,
            s.name,
            s.phone,
            s.email,
