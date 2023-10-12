@@ -51,6 +51,10 @@ BEGIN
             THEN RETURN public.errmessage(_errcode := 'customerresources.guest_ins.email_exists',
                                           _msg     := 'Такой email уже принадлежит другому пользователю!',
                                           _detail  := concat('email = ', _email));
+        WHEN (SELECT 1 FROM customerresources.guestloyalty gl WHERE gl.card_id = _card_id)
+            THEN RETURN public.errmessage(_errcode := 'customerresources.guest_ins.card_not_exists',
+                                          _msg     := 'Такой карты лояльности не существует!',
+                                          _detail  := concat('card_id = ', _card_id));
         ELSE NULL;
     END CASE;
 
