@@ -44,7 +44,6 @@ BEGIN
            _dt_ch,
            _ch_employee;
 
-
     RETURN JSONB_BUILD_OBJECT('data', NULL);
 END
 $$;
