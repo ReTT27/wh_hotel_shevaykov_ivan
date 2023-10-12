@@ -13,7 +13,7 @@ DECLARE
     _is_deleted      BOOLEAN     := FALSE;
 BEGIN
 
-    SELECT COALESCE(gl.card_id, nextval('customerresources.guestloyaltysq')) as card_id,
+    SELECT COALESCE(gl.card_id, nextval('customerresources.guestloyaltysq')) AS card_id,
            s.cashback_points,
            s.dt_registration,
            s.is_actual,
