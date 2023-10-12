@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS hotel.cleaningthing
 (
-    set_id      INT         NOT NULL,
-    cleaning_id SMALLINT    NOT NULL,
+    set_id      BIGSERIAL   NOT NULL,
+    cleaning_id INT         NOT NULL,
     thing_id    SMALLINT    NOT NULL,
     thing_count SMALLINT    NOT NULL,
     ch_employee INT         NOT NULL,
