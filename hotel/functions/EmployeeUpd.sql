@@ -15,7 +15,7 @@ DECLARE
     _is_del      BOOLEAN     := FALSE;
 BEGIN
 
-    SELECT COALESCE(e.employee_id, nextval('hotel.employeesq')) AS card_id,
+    SELECT COALESCE(e.employee_id, nextval('hotel.employeesq')) AS employee_id,
            s.name,
            s.phone,
            s.email,
@@ -61,7 +61,7 @@ BEGIN
                                           _detail  := concat('email = ', _email));
         WHEN (SELECT 1 FROM dictionary.position p WHERE p.post_id != _position_id)
             THEN RETURN public.errmessage(_errcode := 'hotel.employee_ins.position_not_exist',
-                                          _msg     := 'Нет такой должности!',
+                                          _msg     := 'Такой должности не существует!',
                                           _detail  := concat('position_id = ', _position_id));
         ELSE NULL;
     END CASE;

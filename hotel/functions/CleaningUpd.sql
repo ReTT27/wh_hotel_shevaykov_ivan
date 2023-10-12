@@ -33,11 +33,11 @@ BEGIN
     CASE
         WHEN (SELECT 1 FROM hotel.employee e WHERE e.employee_id != _employee_id)
             THEN RETURN public.errmessage(_errcode := 'hotel.cleaning_ins.employee_not_exist',
-                                          _msg     := 'Нет такого сотрудника!',
+                                          _msg     := 'Такого сотрудника не существует!',
                                           _detail  := concat('employee_id = ', _employee_id));
         WHEN (SELECT 1 FROM hotel.rooms r WHERE r.room_id != _room_id)
             THEN RETURN public.errmessage(_errcode := 'hotel.cleaning_ins.room_not_exist',
-                                          _msg     := 'Нет такой комнаты!',
+                                          _msg     := 'Такой комнаты не существует!',
                                           _detail  := concat('room_id = ', _room_id));
         ELSE NULL;
     END CASE;
