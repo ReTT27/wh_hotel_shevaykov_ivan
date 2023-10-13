@@ -9,7 +9,7 @@ DECLARE
     _count    SMALLINT;
 BEGIN
 
-    SELECT COALESCE(st.thing_id, nextval('dictionary.positionsq')) AS post_id,
+    SELECT COALESCE(st.thing_id, nextval('dictionary.positionsq')) AS thing_id,
            s.name,
            s.count
     INTO _thing_id,
@@ -28,9 +28,9 @@ BEGIN
                                  _detail  := concat('count = ', _count));
     END IF;
 
-    INSERT INTO dictionary.storage AS p (thing_id,
-                                         name,
-                                         count)
+    INSERT INTO dictionary.storage AS st (thing_id,
+                                          name,
+                                          count)
     SELECT _thing_id,
            _name,
            _count
