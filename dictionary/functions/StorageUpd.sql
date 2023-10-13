@@ -9,7 +9,7 @@ DECLARE
     _count    SMALLINT;
 BEGIN
 
-    SELECT COALESCE(st.thing_id, nextval('dictionary.positionsq')) AS thing_id,
+    SELECT COALESCE(st.thing_id, nextval('dictionary.storagesq')) AS thing_id,
            s.name,
            s.count
     INTO _thing_id,
@@ -19,7 +19,7 @@ BEGIN
                                      name     VARCHAR(32),
                                      count    SMALLINT)
              LEFT JOIN dictionary.storage st
-                       ON st.thing_id = _thing_id;
+                       ON st.thing_id = s.thing_id;
 
     IF (_count < 0 AND _count IS NOT NULL)
     THEN
@@ -35,8 +35,7 @@ BEGIN
            _name,
            _count
     ON CONFLICT (thing_id) DO UPDATE
-        SET name   = excluded.name,
-            count  = excluded.count;
+        SET count = excluded.count;
 
     RETURN JSONB_BUILD_OBJECT('data', NULL);
 END

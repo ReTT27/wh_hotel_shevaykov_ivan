@@ -19,7 +19,7 @@ BEGIN
                                      name        VARCHAR(64),
                                      salary      NUMERIC(8, 2))
              LEFT JOIN dictionary.position p
-                       ON p.position_id = _position_id;
+                       ON p.position_id = s.position_id;
 
     IF (_salary < 0 AND _salary IS NOT NULL)
     THEN
@@ -35,8 +35,7 @@ BEGIN
            _name,
            _salary
     ON CONFLICT (position_id) DO UPDATE
-        SET name   = excluded.name,
-            salary = excluded.salary;
+        SET salary = excluded.salary;
 
     RETURN JSONB_BUILD_OBJECT('data', NULL);
 END
