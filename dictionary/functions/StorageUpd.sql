@@ -5,38 +5,38 @@ AS
 $$
 DECLARE
     _thing_id SMALLINT;
-    _name    VARCHAR(64);
-    _salary  NUMERIC(7, 2);
+    _name     VARCHAR(32);
+    _count    SMALLINT;
 BEGIN
 
-    SELECT COALESCE(p.post_id, nextval('dictionary.positionsq')) AS post_id,
+    SELECT COALESCE(st.thing_id, nextval('dictionary.positionsq')) AS post_id,
            s.name,
-           s.salary
-    INTO _post_id,
+           s.count
+    INTO _thing_id,
          _name,
-         _salary
-    FROM jsonb_to_record(_src) AS s (post_id SMALLINT,
-                                     name    VARCHAR(64),
-                                     salary  NUMERIC(7, 2))
-             LEFT JOIN dictionary.position p
-                       ON p.post_id = _post_id;
+         _count
+    FROM jsonb_to_record(_src) AS s (thing_id SMALLINT,
+                                     name     VARCHAR(32),
+                                     count    SMALLINT)
+             LEFT JOIN dictionary.storage st
+                       ON st.thing_id = _thing_id;
 
-    IF (_salary < 0 AND _salary IS NOT NULL )
+    IF (_count < 0 AND _count IS NOT NULL)
     THEN
-        RETURN public.errmessage(_errcode := 'dictionary.position_ins.salary',
-                                 _msg     := 'Зарплата не может быть отрицательной!',
-                                 _detail  := concat('salary = ', _salary));
+        RETURN public.errmessage(_errcode := 'dictionary.storage_ins.count',
+                                 _msg     := 'Колчество не может быть отрицательным!',
+                                 _detail  := concat('count = ', _count));
     END IF;
 
-    INSERT INTO dictionary.position AS p (post_id,
-                                          name,
-                                          salary)
-    SELECT _post_id,
+    INSERT INTO dictionary.storage AS p (thing_id,
+                                         name,
+                                         count)
+    SELECT _thing_id,
            _name,
-           _salary
-    ON CONFLICT (post_id) DO UPDATE
+           _count
+    ON CONFLICT (thing_id) DO UPDATE
         SET name   = excluded.name,
-            salary = excluded.salary;
+            count  = excluded.count;
 
     RETURN JSONB_BUILD_OBJECT('data', NULL);
 END
