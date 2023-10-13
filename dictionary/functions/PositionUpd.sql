@@ -9,7 +9,7 @@ DECLARE
     _salary      NUMERIC(7, 2);
 BEGIN
 
-    SELECT COALESCE(p.position_id, nextval('dictionary.positionsq')) AS post_id,
+    SELECT COALESCE(p.position_id, nextval('dictionary.positionsq')) AS position_id,
            s.name,
            s.salary
     INTO _position_id,
