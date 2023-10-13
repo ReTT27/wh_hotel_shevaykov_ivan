@@ -7,7 +7,7 @@ DECLARE
     _typefeed_id SMALLINT;
     _name        VARCHAR(32);
     _content     VARCHAR(128);
-    _cost        NUMERIC(6, 2);
+    _cost        NUMERIC(7, 2);
 BEGIN
 
     SELECT COALESCE(tf.typefeed_id, nextval('dictionary.typefeedsq')) AS typefeed_id,
@@ -23,7 +23,7 @@ BEGIN
                                      content     VARCHAR(128),
                                      cost        NUMERIC(6, 2))
              LEFT JOIN dictionary.typefeed tf
-                       ON tf.typefeed_id = _typefeed_id;
+                       ON tf.typefeed_id = s.typefeed_id;
 
     IF (_cost < 0 AND _cost IS NOT NULL)
     THEN
@@ -41,8 +41,7 @@ BEGIN
            _content,
            _cost
     ON CONFLICT (typefeed_id) DO UPDATE
-        SET name    = excluded.name,
-            content = excluded.content,
+        SET content = excluded.content,
             cost    = excluded.cost;
 
     RETURN JSONB_BUILD_OBJECT('data', NULL);

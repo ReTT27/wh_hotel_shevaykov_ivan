@@ -27,7 +27,7 @@ BEGIN
                                      number_rooms SMALLINT,
                                      cost         NUMERIC(7, 2))
              LEFT JOIN dictionary.typerooms tr
-                       ON tr.type_id = _type_id;
+                       ON tr.type_id = s.type_id;
 
     IF (_cost < 0 AND _cost IS NOT NULL)
     THEN
