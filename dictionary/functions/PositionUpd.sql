@@ -6,7 +6,7 @@ $$
 DECLARE
     _position_id SMALLINT;
     _name        VARCHAR(64);
-    _salary      NUMERIC(7, 2);
+    _salary      NUMERIC(8, 2);
 BEGIN
 
     SELECT COALESCE(p.position_id, nextval('dictionary.positionsq')) AS position_id,
@@ -17,7 +17,7 @@ BEGIN
          _salary
     FROM jsonb_to_record(_src) AS s (position_id SMALLINT,
                                      name        VARCHAR(64),
-                                     salary      NUMERIC(7, 2))
+                                     salary      NUMERIC(8, 2))
              LEFT JOIN dictionary.position p
                        ON p.position_id = _position_id;
 
