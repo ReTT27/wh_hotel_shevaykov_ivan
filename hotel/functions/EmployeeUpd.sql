@@ -15,7 +15,7 @@ DECLARE
     _is_del      BOOLEAN     := FALSE;
 BEGIN
 
-    SELECT COALESCE(e.employee_id, nextval('hotel.employeesq')) AS employee_id,
+    SELECT COALESCE(s.employee_id, nextval('hotel.employeesq')) AS employee_id,
            s.name,
            s.phone,
            s.email,
@@ -38,9 +38,7 @@ BEGIN
                                      position_id SMALLINT,
                                      reward      NUMERIC(7, 2),
                                      is_deleted  BOOLEAN,
-                                     is_del      BOOLEAN)
-             LEFT JOIN hotel.employee e
-                       ON e.employee_id = s.employee_id;
+                                     is_del      BOOLEAN);
 
     IF _is_del = TRUE
     THEN

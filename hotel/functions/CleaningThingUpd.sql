@@ -20,19 +20,6 @@ BEGIN
                                      thing_id    INT,
                                      thing_count SMALLINT);
 
-    CASE
-        WHEN (SELECT 1 FROM hotel.cleaning c WHERE c.cleaning_id != _cleaning_id)
-            THEN RETURN public.errmessage(_errcode := 'hotel.cleaningthing_ins.cleaning_not_exist',
-                                          _msg     := 'Нет такой уборки!',
-                                          _detail  := concat('cleaning_id = ', _cleaning_id));
-        WHEN (SELECT 1 FROM dictionary.storage s WHERE s.thing_id != _thing_id)
-            THEN RETURN public.errmessage(_errcode := 'hotel.cleaning_ins.room_not_exist',
-                                          _msg     := 'Нет такой вещи!',
-                                          _detail  := concat('thing_id = ', _thing_id));
-        ELSE NULL;
-    END CASE;
-
-
     INSERT INTO hotel.cleaningthing AS c (cleaning_id,
                                           thing_id,
                                           thing_count,

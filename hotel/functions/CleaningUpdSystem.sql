@@ -1,16 +1,35 @@
-CREATE OR REPLACE FUNCTION hotel.cleaningupd(_src JSONB, _ch_employee INT) RETURNS JSONB
+CREATE OR REPLACE FUNCTION hotel.cleaningupdsystem(_ch_employee INT) RETURNS JSONB
     SECURITY DEFINER
     LANGUAGE plpgsql
 AS
 $$
 DECLARE
-    _cleaning_id INT;
-    _employee_id INT;
-    _room_id     SMALLINT;
-    _dt_ch       TIMESTAMPTZ := now() AT TIME ZONE 'Europe/Moscow';
+    _dt_ch TIMESTAMPTZ := now() AT TIME ZONE 'Europe/Moscow';
 BEGIN
+/*
+    WITH cte AS (SELECT e.employee_id,
+                        r.level,
+                        row_number() OVER (PARTITION BY e.employee_id, r.level) rn,
+                        row_number() OVER (PARTITION BY r.level) rn2
+                 FROM hotel.employee e, hotel.rooms r
+                 WHERE e.position_id = 6)
+    SELECT concat(c2.employee_id, ' = ', c.level), c.rn, c2.rn
+    FROM cte c
+        INNER JOIN cte c2 ON c.rn = c2.rn2;*/
 
-    SELECT COALESCE(s.cleaning_id, nextval('hotel.cleaningsq')) AS cleaning_id,
+CREATE TEMPORARY TABLE IF NOT EXISTS tmp
+(
+
+) ON COMMIT DROP;
+
+WITH cte AS (SELECT e.employee_id
+             FROM hotel.employee e
+             WHERE e.position_id = 6
+             ORDER BY random())
+SELECT
+
+/*
+    SELECT nextval('hotel.cleaningsq') AS cleaning_id,
            s.employee_id,
            s.room_id
     INTO _cleaning_id,
@@ -53,7 +72,7 @@ BEGIN
            ic.date_cleaning,
            ic.dt_ch,
            ic.ch_employee
-    FROM ins_cte ic;
+    FROM ins_cte ic;*/
 
     RETURN JSONB_BUILD_OBJECT('data', NULL);
 END

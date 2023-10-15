@@ -13,7 +13,7 @@ DECLARE
     _dt_ch          TIMESTAMPTZ := now() AT TIME ZONE 'Europe/Moscow';
 BEGIN
 
-    SELECT COALESCE(r.reservation_id, nextval('hotel.reservationsq')) AS reservation_id,
+    SELECT COALESCE(s.reservation_id, nextval('hotel.reservationsq')) AS reservation_id,
            s.room_id,
            s.guest_id,
            s.dt_entry,
@@ -30,21 +30,13 @@ BEGIN
                                      guest_id       INT,
                                      dt_entry       TIMESTAMPTZ,
                                      dt_exit        TIMESTAMPTZ,
-                                     is_reserved    BOOLEAN)
-             LEFT JOIN hotel.reservation r
-                       ON r.reservation_id = s.reservation_id;
+                                     is_reserved    BOOLEAN);
 
-    CASE
-        WHEN (SELECT 1 FROM hotel.rooms r WHERE r.room_id != _room_id)
-            THEN RETURN public.errmessage(_errcode := 'hotel.reservation_ins.room_not_exist',
-                                          _msg     := 'Такого гостиночного номера не существует!',
-                                          _detail  := concat('room_id = ', _room_id));
-        WHEN (SELECT 1 FROM customerresources.guest g WHERE g.guest_id != _guest_id)
-            THEN RETURN public.errmessage(_errcode := 'hotel.reservation_ins.guest_not_exist',
-                                          _msg     := 'Такого гостя не существует!',
-                                          _detail  := concat('guest_id = ', _guest_id));
-        ELSE NULL;
-    END CASE;
+    IF (_dt_entry > _dt_exit)
+    THEN RETURN public.errmessage(_errcode := 'hotel.reservation_ins.date',
+                                  _msg     := 'Даты въезда и выезда некорректны!',
+                                  _detail  := concat('dt_entry = ', _dt_entry, ' dt_exit = ', _dt_exit));
+    END IF;
 
     WITH ins_cte AS (
         INSERT INTO hotel.reservation AS r (reservation_id,
@@ -65,7 +57,6 @@ BEGIN
                    _ch_employee
             ON CONFLICT (reservation_id) DO UPDATE
                 SET room_id     = excluded.room_id,
-                    guest_id    = excluded.guest_id,
                     dt_entry    = excluded.dt_entry,
                     dt_exit     = excluded.dt_exit,
                     is_reserved = excluded.is_reserved,

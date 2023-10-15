@@ -218,14 +218,61 @@ SELECT hotel.roomsupd('
 ```jsonb
 {"data" : null}
 ```
+
+### Добавленгие брони (ReservationUpd)
+```sql
+SELECT hotel.reservationupd(_src := '
+                         {
+                              "room_id": 11,
+                              "guest_id": 2,
+                              "dt_entry": "2023-10-15 14:00:00",
+                              "dt_exit": "2023-10-18 12:00:00",
+                              "is_reserved": true
+                         }
+                         ', _ch_employee := 2);
+```
+Пример ответа при правильном выполнении:
+```jsonb
+{"data" : null}
+```
 Примеры ошибок:
 ```jsonb 
 {
 	"errors": [
 	    {
-		    "error": "hotel.rooms_ins.typerooms_not_exist",
-		    "detail": "type_id = 5",
-		    "message": "Такого типа гостиночного номера не существует!"
+		    "error": "hotel.reservation_ins.date",
+		    "detail": "dt_entry = 2023-10-19 14:00:00+00 dt_exit = 2023-10-18 12:00:00+00",
+		    "message": "Даты въезда и выезда некорректны!"
+	    }
+	]
+}
+```
+
+### Изменение брони (ReservationUpd)
+```sql
+SELECT hotel.reservationupd(_src := '
+                         {
+                              "reservation_id": 1,
+                              "room_id": 12,
+                              "guest_id": 2,
+                              "dt_entry": "2023-10-15 14:00:00",
+                              "dt_exit": "2023-10-18 12:00:00",
+                              "is_reserved": true
+                         }
+                         ', _ch_employee := 2);
+```
+Пример ответа при правильном выполнении:
+```jsonb
+{"data" : null}
+```
+Примеры ошибок:
+```jsonb 
+{
+	"errors": [
+	    {
+		    "error": "hotel.reservation_ins.date",
+		    "detail": "dt_entry = 2023-10-19 14:00:00+00 dt_exit = 2023-10-18 12:00:00+00",
+		    "message": "Даты въезда и выезда некорректны!"
 	    }
 	]
 }
