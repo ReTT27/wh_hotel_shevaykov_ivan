@@ -49,26 +49,14 @@ BEGIN
     END IF;
 
     CASE
-        WHEN (SELECT 1 FROM hotel.employee e WHERE e.phone = _phone AND e.name != _name)
-            THEN RETURN public.errmessage(_errcode := 'hotel.employee_ins.phone_exists',
+        WHEN (SELECT 1 FROM hotel.employee e WHERE e.phone = _phone AND e.employee_id = _employee_id)
+            THEN RETURN public.errmessage(_errcode := 'customerresources.employee_ins.phone_exists',
+                                          _msg     := 'Такой номер телефона уже принадлежит этому пользователю!',
+                                          _detail  := concat('phone = ', _phone));
+        WHEN (SELECT 1 FROM hotel.employee e WHERE e.phone = _phone)
+            THEN RETURN public.errmessage(_errcode := 'customerresources.employee_ins.phone_exists',
                                           _msg     := 'Такой номер телефона уже принадлежит другому пользователю!',
                                           _detail  := concat('phone = ', _phone));
-        WHEN (SELECT 1 FROM hotel.employee e WHERE e.email = _email AND e.name != _name)
-            THEN RETURN public.errmessage(_errcode := 'hotel.employee_ins.email_exists',
-                                          _msg     := 'Такой email уже принадлежит другому пользователю!',
-                                          _detail  := concat('email = ', _email));
-        WHEN (SELECT e.employee_id FROM hotel.employee e WHERE e.phone = _phone AND e.name = _name) != _employee_id
-            THEN RETURN public.errmessage(_errcode := 'customerresources.employee_ins.guest_exists',
-                                          _msg     := 'Такой пользователь уже существует!',
-                                          _detail  := concat('phone = ', _phone));
-        WHEN (SELECT e.employee_id FROM hotel.employee e WHERE e.email = _email AND e.name = _name) != _employee_id
-            THEN RETURN public.errmessage(_errcode := 'customerresources.employee_ins.guest_exists',
-                                          _msg     := 'Такой пользователь уже существует!',
-                                          _detail  := concat('phone = ', _email));
-        WHEN (SELECT count(*) FROM dictionary.position p WHERE p.position_id = _position_id) != 1
-            THEN RETURN public.errmessage(_errcode := 'hotel.employee_ins.position_not_exist',
-                                          _msg     := 'Такой должности не существует!',
-                                          _detail  := concat('position_id = ', _position_id));
         ELSE NULL;
     END CASE;
 

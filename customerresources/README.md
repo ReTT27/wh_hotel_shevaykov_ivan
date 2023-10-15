@@ -31,14 +31,14 @@
 |      dt_ch       | TIMESTAMPTZ | Дата изменения записи                                     |
 
 # Функции
-### Добавления гостя (GuestUpd)
+### Добавления гостя и карты лояльности (GuestUpd)
 ```sql
 SELECT customerresources.guestupd(_src := '
                                   {
-                                    "name": "Сизова Милана Ярославовна",
-                                    "phone": "89776665544",
-                                    "email": "timofey50@ya.ru",
-                                    "birth_day": "2000-12-12"
+                                    "name": "Овсянникова Софья Андреевна",
+                                    "phone": "89991232211",
+                                    "email": "yakov37@ya.ru",
+                                    "birth_day": "1998-10-8"
                                   }
                                   ', _ch_employee := 2);
 ```
@@ -52,7 +52,7 @@ SELECT customerresources.guestupd(_src := '
 	"errors": [
 	    {
 		    "error": "customerresources.guest_ins.phone_exists",
-		    "detail": "phone = 89776665544",
+		    "detail": "phone = 89991232212",
 		    "message": "Такой номер телефона уже принадлежит другому пользователю!"
 	    }
 	]
@@ -63,10 +63,11 @@ SELECT customerresources.guestupd(_src := '
 ```sql
 SELECT customerresources.guestupd(_src := '
                                   {
-                                    "name": "Сизова Милана Ярославовна",
-                                    "phone": "89776665544",
-                                    "email": "timofey50@ya.ru",
-                                    "birth_day": "2000-12-12"
+                                    "guest_id": 2,
+                                    "name": "Щенин Иван Васильевич",
+                                    "phone": "89991232233",
+                                    "email": "ivan2602@gmail.com",
+                                    "birth_day": "1988-10-08"
                                   }
                                   ', _ch_employee := 2);
 ```
@@ -80,8 +81,8 @@ SELECT customerresources.guestupd(_src := '
 	"errors": [
 	    {
 		    "error": "customerresources.guest_ins.phone_exists",
-		    "detail": "phone = 89776665544",
-		    "message": "Такой номер телефона уже принадлежит другому пользователю!"
+		    "detail": "phone = 89991232233",
+		    "message": "Такой номер телефона уже принадлежит этому пользователю!"
 	    }
 	]
 }

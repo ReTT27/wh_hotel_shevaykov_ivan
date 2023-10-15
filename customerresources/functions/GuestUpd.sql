@@ -90,6 +90,23 @@ BEGIN
                     ch_employee = excluded.ch_employee
             RETURNING g.*)
 
+    INSERT INTO history.guestchanges AS gc (guest_id,
+                                            name,
+                                            phone,
+                                            email,
+                                            birth_day,
+                                            card_id,
+                                            dt_ch,
+                                            ch_employee)
+    SELECT ic.guest_id,
+           ic.name,
+           ic.phone,
+           ic.email,
+           ic.birth_day,
+           ic.card_id,
+           ic.dt_ch,
+           ic.ch_employee
+    FROM ins_cte ic;
 
     RETURN JSONB_BUILD_OBJECT('data', NULL);
 END
