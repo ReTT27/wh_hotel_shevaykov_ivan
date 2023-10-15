@@ -6,27 +6,42 @@ $$
 DECLARE
     _dt_ch TIMESTAMPTZ := now() AT TIME ZONE 'Europe/Moscow';
 BEGIN
-/*
-    WITH cte AS (SELECT e.employee_id,
-                        r.level,
-                        row_number() OVER (PARTITION BY e.employee_id, r.level) rn,
-                        row_number() OVER (PARTITION BY r.level) rn2
-                 FROM hotel.employee e, hotel.rooms r
-                 WHERE e.position_id = 6)
-    SELECT concat(c2.employee_id, ' = ', c.level), c.rn, c2.rn
-    FROM cte c
-        INNER JOIN cte c2 ON c.rn = c2.rn2;*/
+    /*
+        WITH cte AS (SELECT e.employee_id,
+                            r.level,
+                            row_number() OVER (PARTITION BY e.employee_id, r.level) rn,
+                            row_number() OVER (PARTITION BY r.level) rn2
+                     FROM hotel.employee e, hotel.rooms r
+                     WHERE e.position_id = 6)
+        SELECT concat(c2.employee_id, ' = ', c.level), c.rn, c2.rn
+        FROM cte c
+            INNER JOIN cte c2 ON c.rn = c2.rn2;*/
 
-CREATE TEMPORARY TABLE IF NOT EXISTS tmp
-(
+    CREATE TEMPORARY TABLE IF NOT EXISTS tmp
+    (
+        employee_id INT      NOT NULL,
+        level       SMALLINT NOT NULL
+    ) ON COMMIT DROP;
 
-) ON COMMIT DROP;
+    WITH cte_e AS (SELECT e.employee_id
+                   FROM hotel.employee e
+                   WHERE e.position_id = 6
+                   ORDER BY random() LIMIT 4)
+       , cte_l AS (SELECT r.level
+                   FROM hotel.rooms r
+                   GROUP BY r.level)
+       , cte_v AS (SELECT ce.employee_id,
+                          cl.level,
+                          row_number() OVER (PARTITION BY cl.level) rn
+                   FROM cte_e ce,
+                        cte_l cl)
+    SELECT cv.employee_id,
+           cv.level
+    FROM cte_v cv
+    WHERE cv.rn = 1;
 
-WITH cte AS (SELECT e.employee_id
-             FROM hotel.employee e
-             WHERE e.position_id = 6
-             ORDER BY random())
-SELECT
+
+
 
 /*
     SELECT nextval('hotel.cleaningsq') AS cleaning_id,
@@ -74,6 +89,6 @@ SELECT
            ic.ch_employee
     FROM ins_cte ic;*/
 
-    RETURN JSONB_BUILD_OBJECT('data', NULL);
+        RETURN JSONB_BUILD_OBJECT('data', NULL);
 END
 $$;
