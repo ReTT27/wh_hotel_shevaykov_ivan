@@ -28,7 +28,7 @@ BEGIN
     IF (_cost < 0 AND _cost IS NOT NULL)
     THEN
         RETURN public.errmessage(_errcode := 'dictionary.typefeed_ins.cost',
-                                 _msg     := 'Стоимость не может быть отрицательным!',
+                                 _msg     := 'Стоимость не может быть отрицательной!',
                                  _detail  := concat('cost = ', _cost));
     END IF;
 

@@ -32,7 +32,7 @@ BEGIN
     IF (_cost < 0 AND _cost IS NOT NULL)
     THEN
         RETURN public.errmessage(_errcode := 'dictionary.typerooms_ins.cost',
-                                 _msg     := 'Стоимость не может быть отрицательным!',
+                                 _msg     := 'Стоимость не может быть отрицательной!',
                                  _detail  := concat('cost = ', _cost));
     END IF;
 
@@ -47,10 +47,7 @@ BEGIN
            _number_rooms,
            _cost
     ON CONFLICT (type_id) DO UPDATE
-        SET name         = excluded.name,
-            number_beds  = excluded.number_beds,
-            number_rooms = excluded.number_rooms,
-            cost         = excluded.cost;
+        SET cost = excluded.cost;
 
     RETURN JSONB_BUILD_OBJECT('data', NULL);
 END
