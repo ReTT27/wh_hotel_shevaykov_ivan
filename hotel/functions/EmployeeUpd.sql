@@ -42,35 +42,35 @@ BEGIN
              LEFT JOIN hotel.employee e
                        ON e.employee_id = s.employee_id;
 
-    CASE
-        WHEN (SELECT 1 FROM hotel.employee e WHERE e.phone = _phone AND e.name = _name)
-            THEN RETURN public.errmessage(_errcode := 'hotel.employee_ins.phone_exists',
-                                          _msg     := 'Такой номер телефона уже принадлежит этому пользователю!',
-                                          _detail  := concat('phone = ', _phone));
-        WHEN (SELECT 1 FROM hotel.employee e WHERE e.phone = _phone)
-            THEN RETURN public.errmessage(_errcode := 'hotel.employee_ins.phone_exists',
-                                          _msg     := 'Такой номер телефона уже принадлежит другому пользователю!',
-                                          _detail  := concat('phone = ', _phone));
-        WHEN (SELECT 1 FROM hotel.employee e WHERE e.email = _email AND e.name = _name)
-            THEN RETURN public.errmessage(_errcode := 'hotel.employee_ins.email_exists',
-                                          _msg     := 'Такой email уже принадлежит этому пользователю!',
-                                          _detail  := concat('email = ', _email));
-        WHEN (SELECT 1 FROM hotel.employee e WHERE e.email = _email)
-            THEN RETURN public.errmessage(_errcode := 'hotel.employee_ins.email_exists',
-                                          _msg     := 'Такой email уже принадлежит другому пользователю!',
-                                          _detail  := concat('email = ', _email));
-        WHEN (SELECT 1 FROM dictionary.position p WHERE p.post_id != _position_id)
-            THEN RETURN public.errmessage(_errcode := 'hotel.employee_ins.position_not_exist',
-                                          _msg     := 'Такой должности не существует!',
-                                          _detail  := concat('position_id = ', _position_id));
-        ELSE NULL;
-    END CASE;
-
     IF _is_del = TRUE
     THEN
         DELETE FROM hotel.employee e WHERE e.employee_id = _employee_id;
         RETURN JSONB_BUILD_OBJECT('data', NULL);
     END IF;
+
+    CASE
+        WHEN (SELECT 1 FROM hotel.employee e WHERE e.phone = _phone AND e.name != _name)
+            THEN RETURN public.errmessage(_errcode := 'hotel.employee_ins.phone_exists',
+                                          _msg     := 'Такой номер телефона уже принадлежит другому пользователю!',
+                                          _detail  := concat('phone = ', _phone));
+        WHEN (SELECT 1 FROM hotel.employee e WHERE e.email = _email AND e.name != _name)
+            THEN RETURN public.errmessage(_errcode := 'hotel.employee_ins.email_exists',
+                                          _msg     := 'Такой email уже принадлежит другому пользователю!',
+                                          _detail  := concat('email = ', _email));
+        WHEN (SELECT e.employee_id FROM hotel.employee e WHERE e.phone = _phone AND e.name = _name) != _employee_id
+            THEN RETURN public.errmessage(_errcode := 'customerresources.employee_ins.guest_exists',
+                                          _msg     := 'Такой пользователь уже существует!',
+                                          _detail  := concat('phone = ', _phone));
+        WHEN (SELECT e.employee_id FROM hotel.employee e WHERE e.email = _email AND e.name = _name) != _employee_id
+            THEN RETURN public.errmessage(_errcode := 'customerresources.employee_ins.guest_exists',
+                                          _msg     := 'Такой пользователь уже существует!',
+                                          _detail  := concat('phone = ', _email));
+        WHEN (SELECT count(*) FROM dictionary.position p WHERE p.position_id = _position_id) != 1
+            THEN RETURN public.errmessage(_errcode := 'hotel.employee_ins.position_not_exist',
+                                          _msg     := 'Такой должности не существует!',
+                                          _detail  := concat('position_id = ', _position_id));
+        ELSE NULL;
+    END CASE;
 
     WITH ins_cte AS (
         INSERT INTO hotel.employee AS e (employee_id,

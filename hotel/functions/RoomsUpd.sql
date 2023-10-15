@@ -21,7 +21,7 @@ BEGIN
              LEFT JOIN hotel.rooms r
                        ON r.room_id = s.room_id;
 
-    IF (SELECT 1 FROM dictionary.typerooms tr WHERE tr.type_id != _type_id)
+    IF (SELECT count(*) FROM dictionary.typerooms tr WHERE tr.type_id = _type_id) != 1
     THEN
         RETURN public.errmessage(_errcode := 'hotel.rooms_ins.typerooms_not_exist',
                                  _msg     := 'Такого типа гостиночного номера не существует!',

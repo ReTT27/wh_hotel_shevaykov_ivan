@@ -29,3 +29,60 @@
 |    is_actual     |   BOOLEAN   | Актуальность карты (TRUE - актуальна, FALSE - заморожена) |
 |   ch_employee    |     INT     | Индивидуальный номер сотрудника, который изменяет запись  |
 |      dt_ch       | TIMESTAMPTZ | Дата изменения записи                                     |
+
+# Функции
+### Добавления гостя (GuestUpd)
+```sql
+SELECT customerresources.guestupd(_src := '
+                                  {
+                                    "name": "Сизова Милана Ярославовна",
+                                    "phone": "89776665544",
+                                    "email": "timofey50@ya.ru",
+                                    "birth_day": "2000-12-12"
+                                  }
+                                  ', _ch_employee := 2);
+```
+Пример ответа при правильном выполнении:
+```jsonb
+{"data" : null}
+```
+Примеры ошибок:
+```jsonb 
+{
+	"errors": [
+	    {
+		    "error": "customerresources.guest_ins.phone_exists",
+		    "detail": "phone = 89776665544",
+		    "message": "Такой номер телефона уже принадлежит другому пользователю!"
+	    }
+	]
+}
+```
+
+### Изменение гостя (GuestUpd)
+```sql
+SELECT customerresources.guestupd(_src := '
+                                  {
+                                    "name": "Сизова Милана Ярославовна",
+                                    "phone": "89776665544",
+                                    "email": "timofey50@ya.ru",
+                                    "birth_day": "2000-12-12"
+                                  }
+                                  ', _ch_employee := 2);
+```
+Пример ответа при правильном выполнении:
+```jsonb
+{"data" : null}
+```
+Примеры ошибок:
+```jsonb 
+{
+	"errors": [
+	    {
+		    "error": "customerresources.guest_ins.phone_exists",
+		    "detail": "phone = 89776665544",
+		    "message": "Такой номер телефона уже принадлежит другому пользователю!"
+	    }
+	]
+}
+```

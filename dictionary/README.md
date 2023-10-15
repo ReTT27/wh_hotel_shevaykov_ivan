@@ -70,6 +70,7 @@ SELECT dictionary.positionupd('
 ```
 
 ### Изменение зарплаты у должности (PositionUpd)
+Изменение происходит только для поле зарплаты (salary).
 ```sql
 SELECT dictionary.positionupd('
 {
@@ -83,7 +84,7 @@ SELECT dictionary.positionupd('
 ```jsonb
 {"data" : null}
 ```
-Примеры ошибок
+Примеры ошибок:
 ```jsonb 
 {
 	"errors": [
@@ -109,7 +110,7 @@ SELECT dictionary.storageupd('
 ```jsonb
 {"data" : null}
 ```
-Примеры ошибок
+Примеры ошибок:
 ```jsonb 
 {
 	"errors": [
@@ -123,6 +124,7 @@ SELECT dictionary.storageupd('
 ```
 
 ### Изменение количество вещей на складе (StorageUpd)
+Изменение происходит только для поле количества (count).
 ```sql
 SELECT dictionary.storageupd('
 {
@@ -136,7 +138,7 @@ SELECT dictionary.storageupd('
 ```jsonb
 {"data" : null}
 ```
-Примеры ошибок
+Примеры ошибок:
 ```jsonb 
 {
 	"errors": [
@@ -163,7 +165,7 @@ SELECT dictionary.typefeedupd('
 ```jsonb
 {"data" : null}
 ```
-Примеры ошибок
+Примеры ошибок:
 ```jsonb 
 {
 	"errors": [
@@ -177,6 +179,7 @@ SELECT dictionary.typefeedupd('
 ```
 
 ### Изменение описания и стоимости типа питания (TypeFeedUpd)
+Изменяется только описание (content) и стоимость типа питания (cost).
 ```sql
 SELECT dictionary.typefeedupd('
 {
@@ -191,7 +194,7 @@ SELECT dictionary.typefeedupd('
 ```jsonb
 {"data" : null}
 ```
-Примеры ошибок
+Примеры ошибок:
 ```jsonb 
 {
 	"errors": [
@@ -219,7 +222,7 @@ SELECT dictionary.typeroomsupd('
 ```jsonb
 {"data" : null}
 ```
-Примеры ошибок
+Примеры ошибок:
 ```jsonb 
 {
 	"errors": [
@@ -233,6 +236,7 @@ SELECT dictionary.typeroomsupd('
 ```
 
 ### Изменение стоимости у типа комнаты (TypeRoomsUpd)
+Изменяется только стоимость типа комнаты (cost).
 ```sql
 SELECT dictionary.typeroomsupd('
 {
@@ -248,7 +252,7 @@ SELECT dictionary.typeroomsupd('
 ```jsonb
 {"data" : null}
 ```
-Примеры ошибок
+Примеры ошибок:
 ```jsonb 
 {
 	"errors": [

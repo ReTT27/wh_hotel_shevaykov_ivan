@@ -7,26 +7,22 @@ DECLARE
     _cleaning_id   INT;
     _employee_id   INT;
     _room_id       SMALLINT;
-    _date_cleaning DATE        := now() AT TIME ZONE 'Europe/Moscow';
+    _date_cleaning DATE        := now()::DATE AT TIME ZONE 'Europe/Moscow';
     _dt_ch         TIMESTAMPTZ := now() AT TIME ZONE 'Europe/Moscow';
-    _is_delete     BOOLEAN     := FALSE;
 BEGIN
 
     SELECT COALESCE(c.cleaning_id, nextval('hotel.cleaningsq')) AS cleaning_id,
            s.employee_id,
            s.room_id,
-           s.date_cleaning,
-           s.is_delete
+           s.date_cleaning
     INTO _cleaning_id,
          _employee_id,
          _room_id,
-         _date_cleaning,
-         _is_delete
-    FROM jsonb_to_record(_src) AS s (cleaning_id   INT,
-                                     employee_id   INT,
-                                     room_id       SMALLINT,
-                                     date_cleaning DATE,
-                                     is_delete     BOOLEAN)
+         _date_cleaning
+    FROM jsonb_to_recordset(_src) AS s (cleaning_id   INT,
+                                        employee_id   INT,
+                                        room_id       SMALLINT,
+                                        date_cleaning DATE)
              LEFT JOIN hotel.cleaning c
                        ON c.cleaning_id = s.cleaning_id;
 
@@ -41,12 +37,6 @@ BEGIN
                                           _detail  := concat('room_id = ', _room_id));
         ELSE NULL;
     END CASE;
-
-    IF _is_delete = TRUE
-    THEN
-        DELETE FROM hotel.cleaning с WHERE с.cleaning_id = _cleaning_id;
-        RETURN JSONB_BUILD_OBJECT('data', NULL);
-    END IF;
 
     WITH ins_cte AS (
         INSERT INTO hotel.cleaning AS c (cleaning_id,

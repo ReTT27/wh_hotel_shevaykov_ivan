@@ -97,3 +97,136 @@
 |    item_count    |  SMALLINT   | Количество вещей                                         |
 |   ch_employee    |     INT     | Индивидуальный номер сотрудника, который изменяет запись |
 |      dt_ch       | TIMESTAMPTZ | Дата изменения записи                                    |
+
+# Функции
+### Добавления сотрудника (EmployeeUpd)
+```sql
+SELECT hotel.employeeupd(_src := '
+                         {
+                           "name": "Лазарева Карина Витальевна",
+                           "phone": "89221441235",
+                           "email": "sh4@gmail.com",
+                           "position_id": 6,
+                           "reward": 5000,
+                           "is_deleted": false
+                         }
+                         ', _ch_employee := 2);
+```
+Пример ответа при правильном выполнении:
+```jsonb
+{"data" : null}
+```
+Примеры ошибок:
+```jsonb 
+{
+	"errors": [
+	    {
+		    "error": "hotel.employee_ins.phone_exists",
+		    "detail": "phone = 89221441263",
+		    "message": "Такой номер телефона уже принадлежит другому пользователю!"
+	    }
+	]
+}
+```
+
+### Изменение сотрудника (EmployeeUpd)
+При изменение сотрудника изменяются все поля.
+```sql
+SELECT hotel.employeeupd(_src := '
+                         {
+                           "employee_id": 4,
+                           "name": "Макаров Максим Артёмович",
+                           "phone": "89221441234",
+                           "email": "sh3@gmail.com",
+                           "position_id": 6,
+                           "reward": 3000,
+                           "is_deleted": false
+                         }
+                         ', _ch_employee := 2);
+```
+Пример ответа при правильном выполнении:
+```jsonb
+{"data" : null}
+```
+Примеры ошибок:
+```jsonb 
+{
+	"errors": [
+	    {
+		    "error": "hotel.employee_ins.phone_exists",
+		    "detail": "phone = 89221441263",
+		    "message": "Такой номер телефона уже принадлежит другому пользователю!"
+	    }
+	]
+}
+```
+
+### Удаление сотрудника (EmployeeUpd)
+При удаление сотрудника надо ввести индивидуальный номер сотрудника и добавить поле для удаление записи.
+```sql
+SELECT hotel.employeeupd(_src := '
+                         {
+                           "employee_id": 5,
+                           "is_del": true
+                         }
+                         ', _ch_employee := 2);
+```
+Пример ответа при правильном выполнении:
+```jsonb
+{"data" : null}
+```
+
+### Фиксирование сотрудника на работе (WorkingUpd)
+```sql
+SELECT hotel.workingupd('
+                         {
+                           "employee_id": 4
+                         }
+                         ');
+```
+Пример ответа при правильном выполнении:
+```jsonb
+{"data" : null}
+```
+
+### Добавления гостиничного номера (RoomsUpd)
+```sql
+SELECT hotel.roomsupd('
+{
+  "type_id": 1,
+  "level": 1
+}
+');
+```
+Пример ответа при правильном выполнении:
+```jsonb
+{"data" : null}
+```
+
+### Изменение гостиничного номера (RoomsUpd)
+При изменение изменяется только поле типа комнаты (type_id)
+```sql
+SELECT hotel.roomsupd('
+{
+  "room_id": 12,
+  "type_id": 2,
+  "level": 1
+}
+');
+```
+Пример ответа при правильном выполнении:
+```jsonb
+{"data" : null}
+```
+Примеры ошибок:
+```jsonb 
+{
+	"errors": [
+	    {
+		    "error": "hotel.rooms_ins.typerooms_not_exist",
+		    "detail": "type_id = 5",
+		    "message": "Такого типа гостиночного номера не существует!"
+	    }
+	]
+}
+```
