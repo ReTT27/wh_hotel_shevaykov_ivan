@@ -16,9 +16,9 @@ BEGIN
     INTO _cleaning_id,
          _employee_id,
          _room_id
-    FROM jsonb_to_recordset(_src) AS s (cleaning_id INT,
-                                        employee_id INT,
-                                        room_id     SMALLINT);
+    FROM jsonb_to_record(_src) AS s (cleaning_id INT,
+                                     employee_id INT,
+                                     room_id     SMALLINT);
 
     WITH ins_cte AS (
         INSERT INTO hotel.cleaning AS c (cleaning_id,

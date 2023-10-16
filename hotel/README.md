@@ -178,7 +178,7 @@ SELECT hotel.employeeupd(_src := '
 
 ### Фиксирование сотрудника на работе (WorkingUpd)
 ```sql
-SELECT hotel.workingupd('
+SELECT hotel.workingupd(_src := '
                          {
                            "employee_id": 4
                          }
@@ -276,4 +276,104 @@ SELECT hotel.reservationupd(_src := '
 	    }
 	]
 }
+```
+
+### Добавления сотрудника на уборку (CleaningUpd)
+```sql
+SELECT hotel.cleaningupd(_src := '
+                         {
+                           "employee_id": 14,
+                           "room_id": 12
+                         }
+                         ', _ch_employee := 2);
+```
+Пример ответа при правильном выполнении:
+```jsonb
+{"data" : null}
+```
+
+### Изменение сотрудника на уборку (CleaningUpd)
+```sql
+SELECT hotel.cleaningupd(_src := '
+                         {
+                           "cleaning_id": 2,
+                           "employee_id": 15,
+                           "room_id": 12
+                         }
+                         ', _ch_employee := 2);
+```
+Пример ответа при правильном выполнении:
+```jsonb
+{"data" : null}
+```
+
+### Добавления сотрудников на уборку (CleaningUpdSystem)
+```sql
+SELECT hotel.cleaningupdsystem(_ch_employee := 2);
+```
+Пример ответа при правильном выполнении:
+```jsonb
+{"data" : null}
+```
+
+### Добавления вещей к уборке (CleaningThingUpd)
+```sql
+SELECT hotel.cleaningthingupd(_src := '
+                              {
+                                "cleaning_id": 2,
+                                "thing_id": 2,
+                                "thing_count": 1
+                              }
+                              ', _ch_employee := 2);
+```
+Пример ответа при правильном выполнении:
+```jsonb
+{"data" : null}
+```
+
+### Добавления продажи (SalesUpd)
+```sql
+SELECT hotel.salesupd(_src := '
+                      {
+                        "employee_id": 2,
+                        "visitors": [
+                          {
+                            "name": "Наумов Никита Викторович"
+                          },
+                          {
+                            "name": "Прохоров Марк Русланович"
+                          }
+                        ],
+                        "reservation_id": 1,
+                        "typefeed_id": 2
+                      }
+                      ',_ch_employee :=  2);
+```
+Пример ответа при правильном выполнении:
+```jsonb
+{"data" : null}
+```
+
+### Изсенение продажи (SalesUpd)
+```sql
+SELECT hotel.salesupd(_src := '
+                      {
+                        "sale_id": 1,
+                        "employee_id": 2,
+                        "visitors": [
+                          {
+                            "name": "Наумов Никита Викторович"
+                          },
+                          {
+                            "name": "Прохоров Марк Русланович"
+                          }
+                        ],
+                        "reservation_id": 1,
+                        "typefeed_id": 2
+                      }
+                      ',_ch_employee :=  2);
+```
+Пример ответа при правильном выполнении:
+```jsonb
+{"data" : null}
 ```
