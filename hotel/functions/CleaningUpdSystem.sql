@@ -4,90 +4,58 @@ CREATE OR REPLACE FUNCTION hotel.cleaningupdsystem(_ch_employee INT) RETURNS JSO
 AS
 $$
 DECLARE
-    _dt_ch TIMESTAMPTZ := now() AT TIME ZONE 'Europe/Moscow';
+    _dt_ch       TIMESTAMPTZ := now() AT TIME ZONE 'Europe/Moscow';
+    _employee_id INT[];
+    _count_emp   INT:=0::INT;
+    _total INT:=1::INT;
+    i INT:= 10::INT;
 BEGIN
-    /*
-        WITH cte AS (SELECT e.employee_id,
-                            r.level,
-                            row_number() OVER (PARTITION BY e.employee_id, r.level) rn,
-                            row_number() OVER (PARTITION BY r.level) rn2
-                     FROM hotel.employee e, hotel.rooms r
-                     WHERE e.position_id = 6)
-        SELECT concat(c2.employee_id, ' = ', c.level), c.rn, c2.rn
-        FROM cte c
-            INNER JOIN cte c2 ON c.rn = c2.rn2;*/
 
-    CREATE TEMPORARY TABLE IF NOT EXISTS tmp
-    (
-        employee_id INT      NOT NULL,
-        level       SMALLINT NOT NULL
-    ) ON COMMIT DROP;
-
-    WITH cte_e AS (SELECT e.employee_id
-                   FROM hotel.employee e
-                   WHERE e.position_id = 6
-                   ORDER BY random() LIMIT 4)
-       , cte_l AS (SELECT r.level
-                   FROM hotel.rooms r
-                   GROUP BY r.level)
-       , cte_v AS (SELECT ce.employee_id,
-                          cl.level,
-                          row_number() OVER (PARTITION BY cl.level) rn
-                   FROM cte_e ce,
-                        cte_l cl)
-    SELECT cv.employee_id,
-           cv.level
-    FROM cte_v cv
-    WHERE cv.rn = 1;
+        SELECT array_agg(e.employee_id)
+        INTO _employee_id
+        FROM hotel.employee e
+        WHERE e.position_id = 6
+          AND e.employee_id IN
+              (SELECT w.employee_id FROM hotel.working w WHERE now()::DATE = w.dt_touches::DATE);
 
 
+    SELECT count(*)
+    INTO _count_emp
+        FROM hotel.employee e
+        WHERE e.position_id = 6
+          AND e.employee_id IN
+              (SELECT w.employee_id FROM hotel.working w WHERE now()::DATE = w.dt_touches::DATE);
 
+        WHILE (i < 30)
+        LOOP
 
-/*
-    SELECT nextval('hotel.cleaningsq') AS cleaning_id,
-           s.employee_id,
-           s.room_id
-    INTO _cleaning_id,
-         _employee_id,
-         _room_id
-    FROM jsonb_to_recordset(_src) AS s (cleaning_id INT,
-                                        employee_id INT,
-                                        room_id     SMALLINT);
+                    INSERT INTO hotel.cleaning AS c(cleaning_id,
+                                                    employee_id,
+                                                    room_id,
+                                                    date_cleaning,
+                                                    ch_employee,
+                                                    dt_ch)
+                    SELECT nextval('hotel.cleaningsq'),
+                           _employee_id[_total]::INT,
+                           i,
+                           _dt_ch::DATE,
+                           _ch_employee,
+                           _dt_ch
+                    FROM hotel.employee e
+                    WHERE e.employee_id::INT = _employee_id[_total]::INT;
 
-    WITH ins_cte AS (
-        INSERT INTO hotel.cleaning AS c (cleaning_id,
-                                         employee_id,
-                                         room_id,
-                                         date_cleaning,
-                                         dt_ch,
-                                         ch_employee)
-            SELECT _cleaning_id,
-                   _employee_id,
-                   _room_id,
-                   _dt_ch::DATE,
-                   _dt_ch,
-                   _ch_employee
-            ON CONFLICT (cleaning_id) DO UPDATE
-                SET employee_id   = excluded.employee_id,
-                    room_id       = excluded.room_id,
-                    date_cleaning = excluded.date_cleaning,
-                    dt_ch         = excluded.dt_ch,
-                    ch_employee   = excluded.ch_employee
-        RETURNING c.*)
+                    SELECT CASE
+                        WHEN (_total::INT = _count_emp::INT)
+                            THEN  (SELECT 1)
+                        ELSE (SELECT _total+1)
+                    END
+                    INTO _total;
 
-    INSERT INTO history.cleaningchanges AS cc (cleaning_id,
-                                               employee_id,
-                                               room_id,
-                                               date_cleaning,
-                                               dt_ch,
-                                               ch_employee)
-    SELECT ic.cleaning_id,
-           ic.employee_id,
-           ic.room_id,
-           ic.date_cleaning,
-           ic.dt_ch,
-           ic.ch_employee
-    FROM ins_cte ic;*/
+                    SELECT i+1
+                    INTO i;
+
+                    END LOOP;
+
 
         RETURN JSONB_BUILD_OBJECT('data', NULL);
 END
