@@ -354,7 +354,7 @@ SELECT hotel.salesupd(_src := '
 {"data" : null}
 ```
 
-### Изсенение продажи (SalesUpd)
+### Изменение продажи (SalesUpd)
 ```sql
 SELECT hotel.salesupd(_src := '
                       {
