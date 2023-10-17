@@ -10,7 +10,7 @@ DECLARE
     _dt_ch       TIMESTAMPTZ := now() AT TIME ZONE 'Europe/Moscow';
 BEGIN
 
-    SELECT COALESCE(s.cleaning_id, nextval('hotel.cleaningsq')) AS cleaning_id,
+    SELECT COALESCE(cl.cleaning_id, nextval('hotel.cleaningsq')) AS cleaning_id,
            s.employee_id,
            s.room_id
     INTO _cleaning_id,
@@ -18,7 +18,9 @@ BEGIN
          _room_id
     FROM jsonb_to_record(_src) AS s (cleaning_id INT,
                                      employee_id INT,
-                                     room_id     SMALLINT);
+                                     room_id     SMALLINT)
+             LEFT JOIN hotel.cleaning cl
+                       ON cl.cleaning_id = s.cleaning_id;
 
     WITH ins_cte AS (
         INSERT INTO hotel.cleaning AS c (cleaning_id,

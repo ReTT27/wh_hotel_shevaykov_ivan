@@ -14,7 +14,7 @@ BEGIN
     SELECT COALESCE(r.review_id, nextval('hotel.reviewssq')) AS review_id,
            s.category,
            s.content,
-           S.sale_id
+           s.sale_id
     INTO _review_id,
          _category,
          _content,
@@ -36,10 +36,12 @@ BEGIN
            _category,
            _content;
 
-    UPDATE hotel.sales s SET review_id = _review_id
-    WHERE s.sale_id = _sale_id;
+    WITH ins_cte AS (
+        UPDATE hotel.sales s SET review_id = _review_id
+            WHERE s.sale_id = _sale_id
+            RETURNING s.*)
 
-    INSERT INTO history.saleschanges AS rc (sale_id,
+    INSERT INTO history.saleschanges AS sc (sale_id,
                                             employee_id,
                                             visitors,
                                             reservation_id,
@@ -47,16 +49,15 @@ BEGIN
                                             review_id,
                                             dt_ch,
                                             ch_employee)
-    SELECT sal.sale_id,
-           sal.employee_id,
-           sal.visitors,
-           sal.reservation_id,
-           sal.typefeed_id,
-           sal.review_id,
-           sal.dt_ch,
-           sal.ch_employee
-    FROM hotel.sales sal
-    WHERE sal.sale_id = _sale_id;
+    SELECT ic.sale_id,
+           ic.employee_id,
+           ic.visitors,
+           ic.reservation_id,
+           ic.typefeed_id,
+           ic.review_id,
+           ic.dt_ch,
+           ic.ch_employee
+    FROM ins_cte ic;
 
     RETURN JSONB_BUILD_OBJECT('data', NULL);
 END

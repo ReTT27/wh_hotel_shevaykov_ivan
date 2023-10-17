@@ -12,51 +12,31 @@ DECLARE
     _reward      NUMERIC(7, 2);
     _is_deleted  BOOLEAN;
     _dt_ch       TIMESTAMPTZ := now() AT TIME ZONE 'Europe/Moscow';
-    _is_del      BOOLEAN     := FALSE;
 BEGIN
 
-    SELECT COALESCE(s.employee_id, nextval('hotel.employeesq')) AS employee_id,
+    SELECT COALESCE(e.employee_id, nextval('hotel.employeesq')) AS employee_id,
            s.name,
            s.phone,
            s.email,
            s.position_id,
            s.reward,
-           s.is_deleted,
-           s.is_del
+           s.is_deleted
     INTO _employee_id,
          _name,
          _phone,
          _email,
          _position_id,
          _reward,
-         _is_deleted,
-         _is_del
+         _is_deleted
     FROM jsonb_to_record(_src) AS s (employee_id INT,
                                      name        VARCHAR(64),
                                      phone       VARCHAR(11),
                                      email       VARCHAR(32),
                                      position_id SMALLINT,
                                      reward      NUMERIC(7, 2),
-                                     is_deleted  BOOLEAN,
-                                     is_del      BOOLEAN);
-
-    IF _is_del = TRUE
-    THEN
-        DELETE FROM hotel.employee e WHERE e.employee_id = _employee_id;
-        RETURN JSONB_BUILD_OBJECT('data', NULL);
-    END IF;
-
-    CASE
-        WHEN (SELECT 1 FROM hotel.employee e WHERE e.phone = _phone AND e.employee_id = _employee_id)
-            THEN RETURN public.errmessage(_errcode := 'customerresources.employee_ins.phone_exists',
-                                          _msg     := 'Такой номер телефона уже принадлежит этому пользователю!',
-                                          _detail  := concat('phone = ', _phone));
-        WHEN (SELECT 1 FROM hotel.employee e WHERE e.phone = _phone)
-            THEN RETURN public.errmessage(_errcode := 'customerresources.employee_ins.phone_exists',
-                                          _msg     := 'Такой номер телефона уже принадлежит другому пользователю!',
-                                          _detail  := concat('phone = ', _phone));
-        ELSE NULL;
-    END CASE;
+                                     is_deleted  BOOLEAN)
+             LEFT JOIN hotel.employee e
+                       ON e.employee_id = s.employee_id;
 
     WITH ins_cte AS (
         INSERT INTO hotel.employee AS e (employee_id,

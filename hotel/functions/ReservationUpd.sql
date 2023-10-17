@@ -13,7 +13,7 @@ DECLARE
     _dt_ch          TIMESTAMPTZ := now() AT TIME ZONE 'Europe/Moscow';
 BEGIN
 
-    SELECT COALESCE(s.reservation_id, nextval('hotel.reservationsq')) AS reservation_id,
+    SELECT COALESCE(r.reservation_id, nextval('hotel.reservationsq')) AS reservation_id,
            s.room_id,
            s.guest_id,
            s.dt_entry,
@@ -30,7 +30,9 @@ BEGIN
                                      guest_id       INT,
                                      dt_entry       TIMESTAMPTZ,
                                      dt_exit        TIMESTAMPTZ,
-                                     is_reserved    BOOLEAN);
+                                     is_reserved    BOOLEAN)
+             LEFT JOIN hotel.reservation r
+                       ON r.reservation_id = s.reservation_id;
 
     IF (_dt_entry > _dt_exit)
     THEN RETURN public.errmessage(_errcode := 'hotel.reservation_ins.date',
