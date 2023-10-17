@@ -1,7 +1,6 @@
 CREATE TABLE IF NOT EXISTS history.guestchanges
 (
-    lord_id     BIGSERIAL   NOT NULL
-        CONSTRAINT pk_guestchanges PRIMARY KEY,
+    lord_id     BIGSERIAL   NOT NULL,
     guest_id    INT         NOT NULL,
     name        VARCHAR(64) NOT NULL,
     phone       VARCHAR(11) NOT NULL,

@@ -1,7 +1,6 @@
 CREATE TABLE IF NOT EXISTS history.saleschanges
 (
-    log_id         BIGSERIAL     NOT NULL
-        CONSTRAINT pk_saleschanges PRIMARY KEY,
+    log_id         BIGSERIAL     NOT NULL,
     sale_id        INT           NOT NULL,
     employee_id    INT           NOT NULL,
     visitors       JSONB,

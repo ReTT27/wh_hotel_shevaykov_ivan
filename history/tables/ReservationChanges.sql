@@ -1,7 +1,6 @@
 CREATE TABLE IF NOT EXISTS history.reservationchanges
 (
-    log_id         BIGSERIAL   NOT NULL
-        CONSTRAINT pk_reservationchanges PRIMARY KEY,
+    log_id         BIGSERIAL   NOT NULL,
     reservation_id INT         NOT NULL,
     room_id        SMALLINT    NOT NULL,
     guest_id       INT         NOT NULL,

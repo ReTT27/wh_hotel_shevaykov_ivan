@@ -1,7 +1,6 @@
 CREATE TABLE IF NOT EXISTS history.employeechanges
 (
-    log_id      BIGSERIAL     NOT NULL
-        CONSTRAINT pk_employeechanges PRIMARY KEY,
+    log_id      BIGSERIAL     NOT NULL,
     employee_id INT           NOT NULL,
     name        VARCHAR(64)   NOT NULL,
     phone       VARCHAR(11)   NOT NULL,
