@@ -354,11 +354,10 @@ SELECT hotel.salesupd(_src := '
 {"data" : null}
 ```
 
-### Изменение продажи (SalesUpd)
+### Добавления отзыва (ReviewsUpd)
 ```sql
 SELECT hotel.salesupd(_src := '
                       {
-                        "sale_id": 1,
                         "employee_id": 2,
                         "visitors": [
                           {

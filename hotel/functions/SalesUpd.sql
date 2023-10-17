@@ -33,7 +33,9 @@ BEGIN
                                      visitors       JSONB,
                                      reservation_id INT,
                                      typefeed_id    SMALLINT,
-                                     review_id      INT);
+                                     review_id      INT)
+             LEFT JOIN hotel.sales sal
+                 ON s.sale_id = sal.sale_id;
 
 
     SELECT jsonb_array_length(_visitors)
@@ -72,15 +74,6 @@ BEGIN
                    _sale,
                    _dt_ch,
                    _ch_employee
-            ON CONFLICT (sale_id) DO UPDATE
-                SET employee_id    = excluded.employee_id,
-                    visitors       = excluded.visitors,
-                    reservation_id = excluded.reservation_id,
-                    typefeed_id    = excluded.typefeed_id,
-                    review_id      = excluded.review_id,
-                    sale           = excluded.sale,
-                    dt_ch          = excluded.dt_ch,
-                    ch_employee    = excluded.ch_employee
         RETURNING s.*)
 
     INSERT INTO history.saleschanges AS rc (sale_id,
