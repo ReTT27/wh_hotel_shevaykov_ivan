@@ -16,7 +16,7 @@ DECLARE
     _dt_ch          TIMESTAMPTZ := now() AT TIME ZONE 'Europe/Moscow';
 BEGIN
 
-    SELECT COALESCE(s.sale_id, nextval('hotel.salessq')) AS sale_id,
+    SELECT COALESCE(sal.sale_id, nextval('hotel.salessq')) AS sale_id,
            s.employee_id,
            s.visitors,
            s.reservation_id,
@@ -76,7 +76,7 @@ BEGIN
                    _ch_employee
         RETURNING s.*)
 
-    INSERT INTO history.saleschanges AS rc (sale_id,
+    INSERT INTO history.saleschanges AS sc (sale_id,
                                             employee_id,
                                             visitors,
                                             reservation_id,

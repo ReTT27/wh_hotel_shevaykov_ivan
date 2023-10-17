@@ -356,21 +356,13 @@ SELECT hotel.salesupd(_src := '
 
 ### Добавления отзыва (ReviewsUpd)
 ```sql
-SELECT hotel.salesupd(_src := '
+SELECT hotel.reviewsupd(_src := '
                       {
-                        "employee_id": 2,
-                        "visitors": [
-                          {
-                            "name": "Наумов Никита Викторович"
-                          },
-                          {
-                            "name": "Прохоров Марк Русланович"
-                          }
-                        ],
-                        "reservation_id": 1,
-                        "typefeed_id": 2
+                        "category": 0,
+                        "content": "Все очень понравилось!",
+                        "sale_id": 1
                       }
-                      ',_ch_employee :=  2);
+                      ', _ch_employee := 2);
 ```
 Пример ответа при правильном выполнении:
 ```jsonb
