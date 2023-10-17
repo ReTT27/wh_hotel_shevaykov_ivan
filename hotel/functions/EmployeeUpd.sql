@@ -67,16 +67,35 @@ BEGIN
                     dt_ch       = excluded.dt_ch,
                     ch_employee = excluded.ch_employee
         RETURNING e.*)
+        , ins_his AS (INSERT INTO history.employeechanges AS ec (employee_id,
+                                                                 name,
+                                                                 phone,
+                                                                 email,
+                                                                 position_id,
+                                                                 reward,
+                                                                 is_deleted,
+                                                                 dt_ch,
+                                                                 ch_employee)
+                            SELECT ic.employee_id,
+                                   ic.name,
+                                   ic.phone,
+                                   ic.email,
+                                   ic.position_id,
+                                   ic.reward,
+                                   ic.is_deleted,
+                                   ic.dt_ch,
+                                   ic.ch_employee
+                            FROM ins_cte ic)
 
-    INSERT INTO history.employeechanges AS ec (employee_id,
-                                               name,
-                                               phone,
-                                               email,
-                                               position_id,
-                                               reward,
-                                               is_deleted,
-                                               dt_ch,
-                                               ch_employee)
+    INSERT INTO whsync.employeesync AS es (employee_id,
+                                           name,
+                                           phone,
+                                           email,
+                                           position_id,
+                                           reward,
+                                           is_deleted,
+                                           dt_ch,
+                                           ch_employee)
     SELECT ic.employee_id,
            ic.name,
            ic.phone,
