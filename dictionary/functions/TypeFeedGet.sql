@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION dictionary.positionget() RETURNS JSONB
+CREATE OR REPLACE FUNCTION dictionary.typefeedget() RETURNS JSONB
     SECURITY DEFINER
     LANGUAGE plpgsql
 AS
