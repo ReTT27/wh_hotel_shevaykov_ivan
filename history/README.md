@@ -87,3 +87,14 @@ SELECT history.deletepartitions(_name_inh := 'cleaningchanges');
 ```jsonb
 {"data" : null}
 ```
+Пример ответа при ошибке:
+```jsonb
+{
+	"errors": [
+	{
+		"error": "history.partitions_del",
+		"detail": "Длина массива = 0",
+		"message": "Таблиц для удаления нет!"
+	}]
+}
+```
