@@ -1,7 +1,6 @@
 CREATE TABLE IF NOT EXISTS history.guestchanges
 (
-    lord_id     BIGSERIAL   NOT NULL
-        CONSTRAINT pk_guestchanges PRIMARY KEY,
+    lord_id     BIGSERIAL   NOT NULL,
     guest_id    INT         NOT NULL,
     name        VARCHAR(64) NOT NULL,
     phone       VARCHAR(11) NOT NULL,
@@ -9,6 +8,5 @@ CREATE TABLE IF NOT EXISTS history.guestchanges
     birth_day   DATE        NOT NULL,
     card_id     INT,
     ch_employee INT         NOT NULL,
-    dt_ch       TIMESTAMPTZ NOT NULL,
-    CONSTRAINT uq_guest_guest_card UNIQUE (guest_id, card_id)
+    dt_ch       TIMESTAMPTZ NOT NULL
 );

@@ -1,6 +1,7 @@
-CREATE TABLE IF NOT EXISTS history.employeechanges
+CREATE TABLE IF NOT EXISTS whsync.employeesync
 (
-    log_id      BIGSERIAL     NOT NULL,
+    log_id      BIGSERIAL     NOT NULL
+        CONSTRAINT pk_employeesync PRIMARY KEY,
     employee_id INT           NOT NULL,
     name        VARCHAR(64)   NOT NULL,
     phone       VARCHAR(11)   NOT NULL,
@@ -9,5 +10,6 @@ CREATE TABLE IF NOT EXISTS history.employeechanges
     reward      NUMERIC(8, 2) NOT NULL,
     is_deleted  BOOLEAN       NOT NULL,
     ch_employee INT           NOT NULL,
-    dt_ch       TIMESTAMPTZ   NOT NULL
+    dt_ch       TIMESTAMPTZ   NOT NULL,
+    dt_sync     TIMESTAMPTZ
 );
