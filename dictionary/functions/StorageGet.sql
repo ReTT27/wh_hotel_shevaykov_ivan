@@ -6,7 +6,8 @@ $$
 BEGIN
 
     RETURN JSONB_BUILD_OBJECT('data', jsonb_agg(row_to_json(res)))
-    FROM (SELECT s.name,
+    FROM (SELECT s.thing_id,
+                 s.name,
                  s.count
           FROM dictionary.storage s) res;
 

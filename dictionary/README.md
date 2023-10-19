@@ -264,3 +264,166 @@ SELECT dictionary.typeroomsupd('
 	]
 }
 ```
+
+### Вывод должностей (PositionGet)
+```sql
+SELECT dictionary.positionget();
+```
+Пример ответа при правильном выполнении:
+```jsonb
+{
+	"data": [
+	{
+		"name": "Управляющий отелем",
+		"salary": 259999.00,
+		"position_id": 1
+	},
+	{
+		"name": "Старший администратор",
+		"salary": 99999.99,
+		"position_id": 2
+	},
+	{
+		"name": "Администратор",
+		"salary": 69999.99,
+		"position_id": 3
+	},
+	{
+		"name": "Заведующий складом",
+		"salary": 69999.99,
+		"position_id": 4
+	},
+	{
+		"name": "Старшая горничная",
+		"salary": 79999.99,
+		"position_id": 5
+	},
+	{
+		"name": "Горничная",
+		"salary": 49999.99,
+		"position_id": 6
+	},
+	{
+		"name": "Менеджер по бронированию",
+		"salary": 79999.99,
+		"position_id": 7
+	},
+	{
+		"name": "Финансовый директор",
+		"salary": 99999.99,
+		"position_id": 8
+	},
+	{
+		"name": "Охранник",
+		"salary": 49999.99,
+		"position_id": 10
+	},
+	{
+		"name": "Сантехник",
+		"salary": 49999.99,
+		"position_id": 11
+	},
+	{
+		"name": "Бухгалтер",
+		"salary": 47999.00,
+		"position_id": 9
+	}]
+}
+```
+
+### Вывод вещей на складе (StorageGet)
+```sql
+SELECT dictionary.storageget();
+```
+Пример ответа при правильном выполнении:
+```jsonb
+{
+	"data": [
+	{
+		"name": "Шампунь",
+		"count": 111,
+		"thing_id": 1
+	},
+	{
+		"name": "Спальный набор",
+		"count": 56,
+		"thing_id": 3
+	},
+	{
+		"name": "Мыло",
+		"count": 160,
+		"thing_id": 4
+	},
+	{
+		"name": "Полотенце",
+		"count": 67,
+		"thing_id": 5
+	},
+	{
+		"name": "Гель для душа",
+		"count": 123,
+		"thing_id": 2
+	}]
+}
+```
+
+### Вывод типов еды (TypeFeedGet)
+```sql
+SELECT dictionary.typefeedget();
+```
+Пример ответа при правильном выполнении:
+```jsonb
+{
+	"data": [
+	{
+		"cost": 689.99,
+		"name": "Завтрак+Обед",
+		"content": "Каша, чай + первое блюда, второе блюдо(суп), чай",
+		"typefeed_id": 2
+	},
+	{
+		"cost": 899.99,
+		"name": "Завтрак+Обед+Ужин",
+		"content": "Каша, чай + первое блюда, второе блюдо(суп), чай + горячее блюдо, чай",
+		"typefeed_id": 3
+	},
+	{
+		"cost": 284.99,
+		"name": "Завтрак",
+		"content": "Каша, чай",
+		"typefeed_id": 1
+	}]
+}
+```
+
+### Вывод типов комнат (TypeRoomsGet)
+```sql
+SELECT dictionary.typeroomsget();
+```
+Пример ответа при правильном выполнении:
+```jsonb
+{
+	"data": [
+	{
+		"cost": 3199.99,
+		"name": "Стандартный номер",
+		"type_id": 2,
+		"number_beds": "DBL",
+		"number_rooms": 1
+	},
+	{
+		"cost": 4799.99,
+		"name": "Семейный номер",
+		"type_id": 3,
+		"number_beds": "QDPL",
+		"number_rooms": 2
+	},
+	{
+		"cost": 2699.99,
+		"name": "Стандартный номер",
+		"type_id": 1,
+		"number_beds": "SGL",
+		"number_rooms": 1
+	}]
+}
+```
