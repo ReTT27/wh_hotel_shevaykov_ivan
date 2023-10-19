@@ -21,32 +21,22 @@
 
 
 # Функции
-### Добавления сотрудника (EmployeeUpd)
+### Экспорт сотрудника (EmployeeSyncExport)
 ```sql
-SELECT hotel.employeeupd(_src := '
-                         {
-                           "name": "Лазарева Карина Витальевна",
-                           "phone": "89221441235",
-                           "email": "sh4@gmail.com",
-                           "position_id": 6,
-                           "reward": 5000,
-                           "is_deleted": false
-                         }
-                         ', _ch_employee := 2);
+SELECT whsync.employeesyncexport(_log_id := 1);
 ```
-Пример ответа при правильном выполнении:
-```jsonb
-{"data" : null}
-```
-Примеры ошибок:
-```jsonb 
-{
-	"errors": [
-	    {
-		    "error": "hotel.employee_ins.phone_exists",
-		    "detail": "phone = 89221441263",
-		    "message": "Такой номер телефона уже принадлежит другому пользователю!"
-	    }
-	]
-}
+
+### Импорт сотрудника (EmployeeSyncImport)
+```sql
+SELECT whsync.employeessyncimport(_src := '[{
+		"name": "Шевяков Иван Максимович",
+		"dt_ch": "2023-10-15T16:41:23.877933+00:00",
+		"email": "sh@gmail.com",
+		"phone": "89221441133",
+		"reward": 25000.00,
+		"is_deleted": false,
+		"ch_employee": 0,
+		"employee_id": 1,
+		"position_id": 1
+	}]');
 ```
