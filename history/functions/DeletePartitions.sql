@@ -17,7 +17,7 @@ BEGIN
 
     IF (array_length(_name_part, 1) IS NULL)
     THEN
-        RETURN public.errmessage(_errcode := 'history.patritions_del',
+        RETURN public.errmessage(_errcode := 'history.partitions_del',
                                  _msg     := 'Таблиц для удаления нет!',
                                  _detail  := 'Длина массива = 0');
     END IF;
