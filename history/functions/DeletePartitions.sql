@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION history.deletepartitionscleaning(_name_inh TEXT) RETURNS JSONB
+CREATE OR REPLACE FUNCTION history.deletepartitions(_name_inh TEXT) RETURNS JSONB
     SECURITY DEFINER
     LANGUAGE plpgsql
 AS

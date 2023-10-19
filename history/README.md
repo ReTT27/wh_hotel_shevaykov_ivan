@@ -77,3 +77,13 @@
 |       sale       |   NUMERIC   | Стоимость продажи                                                         |
 |   ch_employee    |     INT     | Индивидуальный номер сотрудника, который изменяет запись                  |
 |      dt_ch       | TIMESTAMPTZ | Дата изменения записи                                                     |
+
+# Функции
+### Удаление патриций, которые старше 3 месяцев (DeletePartitions)
+```sql
+SELECT history.deletepartitions(_name_inh := 'cleaningchanges');
+```
+Пример ответа при правильном выполнении:
+```jsonb
+{"data" : null}
+```
