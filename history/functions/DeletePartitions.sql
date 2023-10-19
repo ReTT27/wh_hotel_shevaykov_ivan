@@ -15,6 +15,13 @@ BEGIN
           date_trunc('month', now() - interval '3 month')::DATE
       AND i.inhparent::regclass::TEXT = concat('history.',_name_inh);
 
+    IF (array_length(_name_part, 1) IS NULL)
+    THEN
+        RETURN public.errmessage(_errcode := 'history.patritions_del',
+                                 _msg     := 'Таблиц для удаления нет!',
+                                 _detail  := 'Длина массива = 0');
+    END IF;
+
     FOR i IN 1..array_length(_name_part, 1)
         LOOP
              EXECUTE format('DROP TABLE history.%I', _name_part[i]);

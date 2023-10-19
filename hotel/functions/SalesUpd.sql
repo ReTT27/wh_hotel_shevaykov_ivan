@@ -71,7 +71,7 @@ BEGIN
 
     CASE
         WHEN (_cash > _cash_c OR _cash > _sale)
-            THEN SELECT public.errmessage(_errcode := 'hotel.sales_ins.cash',
+            THEN RETURN public.errmessage(_errcode := 'hotel.sales_ins.cash',
                                           _msg     := 'Кешбэк введен не верно!',
                                           _detail  := concat('cash = ', _cash));
 
