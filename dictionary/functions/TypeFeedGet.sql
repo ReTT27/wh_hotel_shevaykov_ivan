@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION dictionary.typefeedget() RETURNS JSONB
+CREATE OR REPLACE FUNCTION dictionary.typefeedget(_typefeed_id INT) RETURNS JSONB
     SECURITY DEFINER
     LANGUAGE plpgsql
 AS
@@ -10,7 +10,8 @@ BEGIN
                  tf.name,
                  tf.content,
                  tf.cost
-          FROM dictionary.typefeed tf) res;
+          FROM dictionary.typefeed tf
+          WHERE tf.typefeed_id = COALESCE(_typefeed_id, tf.typefeed_id)) res;
 
 END
 $$;

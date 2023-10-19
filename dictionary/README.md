@@ -267,7 +267,7 @@ SELECT dictionary.typeroomsupd('
 
 ### Вывод должностей (PositionGet)
 ```sql
-SELECT dictionary.positionget();
+SELECT dictionary.positionget(_position_id := null);
 ```
 Пример ответа при правильном выполнении:
 ```jsonb
@@ -333,7 +333,7 @@ SELECT dictionary.positionget();
 
 ### Вывод вещей на складе (StorageGet)
 ```sql
-SELECT dictionary.storageget();
+SELECT dictionary.storageget(_thing_id := null);
 ```
 Пример ответа при правильном выполнении:
 ```jsonb
@@ -369,7 +369,7 @@ SELECT dictionary.storageget();
 
 ### Вывод типов еды (TypeFeedGet)
 ```sql
-SELECT dictionary.typefeedget();
+SELECT dictionary.typefeedget(_typefeed_id := null);
 ```
 Пример ответа при правильном выполнении:
 ```jsonb
@@ -398,7 +398,7 @@ SELECT dictionary.typefeedget();
 
 ### Вывод типов комнат (TypeRoomsGet)
 ```sql
-SELECT dictionary.typeroomsget();
+SELECT dictionary.typeroomsget(_type_id := null);
 ```
 Пример ответа при правильном выполнении:
 ```jsonb

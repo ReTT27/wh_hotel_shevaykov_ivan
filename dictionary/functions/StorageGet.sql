@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION dictionary.storageget() RETURNS JSONB
+CREATE OR REPLACE FUNCTION dictionary.storageget(_thing_id INT) RETURNS JSONB
     SECURITY DEFINER
     LANGUAGE plpgsql
 AS
@@ -9,7 +9,8 @@ BEGIN
     FROM (SELECT s.thing_id,
                  s.name,
                  s.count
-          FROM dictionary.storage s) res;
+          FROM dictionary.storage s
+          WHERE s.thing_id = COALESCE(_thing_id, s.thing_id)) res;
 
 END
 $$;
