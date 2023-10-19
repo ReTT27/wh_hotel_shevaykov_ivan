@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION dictionary.positionget(_position_id SMALLINT) RETURNS JSONB
+CREATE OR REPLACE FUNCTION dictionary.positionget(_position_id INT) RETURNS JSONB
     SECURITY DEFINER
     LANGUAGE plpgsql
 AS

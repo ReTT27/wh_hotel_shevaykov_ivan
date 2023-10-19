@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION hotel.roomsget(_room_id SMALLINT, _type_id SMALLINT, _level SMALLINT) RETURNS JSONB
+CREATE OR REPLACE FUNCTION hotel.roomsget(_room_id INT, _type_id INT, _level INT) RETURNS JSONB
     SECURITY DEFINER
     LANGUAGE plpgsql
 AS

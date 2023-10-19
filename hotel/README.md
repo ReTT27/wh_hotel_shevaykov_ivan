@@ -408,11 +408,11 @@ SELECT hotel.cleaningget(_cleaning_id := null, _employee_id := null, _room_id :=
 ### Вывод вещей для уборок (CleaningThingGet)
 На вход есть необязательные параметры, с их помощью осуществляется фильтрация данных.
 
-| Название столбца | Тип данных  | Описание                                                 |
-|:----------------:|:-----------:|:---------------------------------------------------------|
-|     _set_id      |   BIGINT    | Индивидуальный номер набора                              |
-|   _cleaning_id   |     INT     | Индивидуальный номер уборки                              |
-|    _thing_id     |  SMALLINT   | Индивидуальный номер вещи                                |
+| Название столбца | Тип данных | Описание                                                 |
+|:----------------:|:----------:|:---------------------------------------------------------|
+|     _set_id      |   BIGINT   | Индивидуальный номер набора                              |
+|   _cleaning_id   |    INT     | Индивидуальный номер уборки                              |
+|    _thing_id     |    INT     | Индивидуальный номер вещи                                |
 ```sql
 SELECT hotel.cleaningthingget(_set_id := null, _cleaning_id := null, _thing_id := null);
 ```
@@ -465,10 +465,10 @@ SELECT hotel.employeeget(_employee_id := null, _phone := '89221441133', _is_dele
 
 | Название столбца | Тип данных | Описание                                      |
 |:----------------:|:----------:|:----------------------------------------------|
-|  reservation_id  |    INT     | Индивидуальный номер брони                    |
-|     room_id      |  SMALLINT  | Индивидуальный номер гостиничного номера      |
-|     guest_id     |    INT     | Индивидуальный номер гостя                    |
-|   is_reserved    |  BOOLEAN   | Завершилась ли бронь (TRUE - да, FALSE - нет) |
+| _reservation_id  |    INT     | Индивидуальный номер брони                    |
+|     _room_id     |    INT     | Индивидуальный номер гостиничного номера      |
+|    _guest_id     |    INT     | Индивидуальный номер гостя                    |
+|   _is_reserved   |  BOOLEAN   | Завершилась ли бронь (TRUE - да, FALSE - нет) |
 ```sql
 SELECT hotel.reservationget(_reservation_id := null, _room_id := null, _guest_id := null, _is_reserved := null);
 ```
@@ -504,9 +504,9 @@ SELECT hotel.reservationget(_reservation_id := null, _room_id := null, _guest_id
 
 | Название столбца | Тип данных | Описание                                                   |
 |:----------------:|:----------:|:-----------------------------------------------------------|
-|    review_id     |    INT     | Индивидуальный номер отзыва                                |
-|   date_review    |    DATE    | Дата отзыва                                                |
-|     category     |  SMALLINT  | Категория отзыва (положительный - 0 или отрицательный - 1) |
+|    _review_id    |    INT     | Индивидуальный номер отзыва                                |
+|   _date_review   |    DATE    | Дата отзыва                                                |
+|    _category     |    INT     | Категория отзыва (положительный - 0 или отрицательный - 1) |
 ```sql
 SELECT hotel.reviewsget(_review_id := null, _category := null);
 ```
@@ -528,9 +528,9 @@ SELECT hotel.reviewsget(_review_id := null, _category := null);
 
 | Название столбца | Тип данных | Описание                                      |
 |:----------------:|:----------:|:----------------------------------------------|
-|     room_id      |  SMALLINT  | Индивидуальный номер гостиничного номера      |
-|     type_id      |  SMALLINT  | Индивидуальный номер типа гостиничного номера |
-|      level       |  SMALLINT  | Этаж гостиничного номера                      |
+|     _room_id     |    INT     | Индивидуальный номер гостиничного номера      |
+|     _type_id     |    INT     | Индивидуальный номер типа гостиничного номера |
+|      _level      |    INT     | Этаж гостиничного номера                      |
 ```sql
 SELECT hotel.roomsget(_room_id := null, _type_id := null, _level := null);
 ```

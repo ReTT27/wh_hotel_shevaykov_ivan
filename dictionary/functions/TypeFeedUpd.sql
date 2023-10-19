@@ -25,7 +25,7 @@ BEGIN
              LEFT JOIN dictionary.typefeed tf
                        ON tf.typefeed_id = s.typefeed_id;
 
-    IF (_cost < 0 AND _cost IS NOT NULL)
+    IF (_cost < 0 OR _cost IS NOT NULL)
     THEN
         RETURN public.errmessage(_errcode := 'dictionary.typefeed_ins.cost',
                                  _msg     := 'Стоимость не может быть отрицательной!',

@@ -29,7 +29,7 @@ BEGIN
              LEFT JOIN dictionary.typerooms tr
                        ON tr.type_id = s.type_id;
 
-    IF (_cost < 0 AND _cost IS NOT NULL)
+    IF (_cost < 0 OR _cost IS NOT NULL)
     THEN
         RETURN public.errmessage(_errcode := 'dictionary.typerooms_ins.cost',
                                  _msg     := 'Стоимость не может быть отрицательной!',

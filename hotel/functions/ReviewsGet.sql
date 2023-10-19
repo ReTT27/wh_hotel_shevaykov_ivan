@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION hotel.reviewsget(_review_id INT, _category SMALLINT) RETURNS JSONB
+CREATE OR REPLACE FUNCTION hotel.reviewsget(_review_id INT, _category INT) RETURNS JSONB
     SECURITY DEFINER
     LANGUAGE plpgsql
 AS

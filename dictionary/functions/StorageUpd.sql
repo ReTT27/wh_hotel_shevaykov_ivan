@@ -21,7 +21,7 @@ BEGIN
              LEFT JOIN dictionary.storage st
                        ON st.thing_id = s.thing_id;
 
-    IF (_count < 0 AND _count IS NOT NULL)
+    IF (_count < 0 OR _count IS NOT NULL)
     THEN
         RETURN public.errmessage(_errcode := 'dictionary.storage_ins.count',
                                  _msg     := 'Колчество не может быть отрицательным!',

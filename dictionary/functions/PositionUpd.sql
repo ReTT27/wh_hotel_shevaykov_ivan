@@ -21,7 +21,7 @@ BEGIN
              LEFT JOIN dictionary.position p
                        ON p.position_id = s.position_id;
 
-    IF (_salary < 0 AND _salary IS NOT NULL)
+    IF (_salary < 0 OR _salary IS NOT NULL)
     THEN
         RETURN public.errmessage(_errcode := 'dictionary.position_ins.salary',
                                  _msg     := 'Зарплата не может быть отрицательной!',

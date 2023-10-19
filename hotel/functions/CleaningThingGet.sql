@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION hotel.cleaningthingget(_set_id BIGINT, _cleaning_id INT, _thing_id SMALLINT) RETURNS JSONB
+CREATE OR REPLACE FUNCTION hotel.cleaningthingget(_set_id BIGINT, _cleaning_id INT, _thing_id INT) RETURNS JSONB
     SECURITY DEFINER
     LANGUAGE plpgsql
 AS

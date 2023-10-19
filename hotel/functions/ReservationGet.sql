@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION hotel.reservationget(_reservation_id INT, _room_id SMALLINT, _guest_id INT, _is_reserved BOOLEAN) RETURNS JSONB
+CREATE OR REPLACE FUNCTION hotel.reservationget(_reservation_id INT, _room_id INT, _guest_id INT, _is_reserved BOOLEAN) RETURNS JSONB
     SECURITY DEFINER
     LANGUAGE plpgsql
 AS
