@@ -5,6 +5,27 @@ AS
 $$
 BEGIN
 
+    WITH ins_cte AS (SELECT s.employee_id,
+                            s.name,
+                            s.phone,
+                            s.email,
+                            s.position_id,
+                            s.reward,
+                            s.is_deleted,
+                            s.ch_employee,
+                            s.dt_ch,
+                            row_number() OVER (PARTITION BY s.ch_employee ORDER BY s.dt_ch DESC) rn
+                     FROM jsonb_to_recordset(_src) AS s(employee_id INT,
+                                                        name        VARCHAR(64),
+                                                        phone       VARCHAR(11),
+                                                        email       VARCHAR(32),
+                                                        position_id SMALLINT,
+                                                        reward      NUMERIC(8, 2),
+                                                        is_deleted  BOOLEAN,
+                                                        ch_employee INT,
+                                                        dt_ch       TIMESTAMPTZ))
+
+
     INSERT INTO hotel.employee AS e (employee_id,
                                      name,
                                      phone,
@@ -14,24 +35,17 @@ BEGIN
                                      is_deleted,
                                      ch_employee,
                                      dt_ch)
-    SELECT s.employee_id,
-           s.name,
-           s.phone,
-           s.email,
-           s.position_id,
-           s.reward,
-           s.is_deleted,
-           s.ch_employee,
-           s.dt_ch
-    FROM jsonb_to_recordset(_src) AS s (employee_id INT,
-                                        name        VARCHAR(64),
-                                        phone       VARCHAR(11),
-                                        email       VARCHAR(32),
-                                        position_id SMALLINT,
-                                        reward      NUMERIC(8, 2),
-                                        is_deleted  BOOLEAN,
-                                        ch_employee INT,
-                                        dt_ch       TIMESTAMPTZ)
+    SELECT ic.employee_id,
+           ic.name,
+           ic.phone,
+           ic.email,
+           ic.position_id,
+           ic.reward,
+           ic.is_deleted,
+           ic.ch_employee,
+           ic.dt_ch
+    FROM ins_cte ic
+    WHERE ic.rn = 1
     ON CONFLICT (employee_id) DO UPDATE
         SET name        = excluded.name,
             phone       = excluded.phone,
