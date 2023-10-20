@@ -55,7 +55,7 @@ BEGIN
             is_deleted  = excluded.is_deleted,
             dt_ch       = excluded.dt_ch,
             ch_employee = excluded.ch_employee
-    WHERE e.dt_ch < excluded.dt_ch;
+    WHERE e.dt_ch <= excluded.dt_ch;
 
     RETURN JSONB_BUILD_OBJECT('data',NULL);
 END
