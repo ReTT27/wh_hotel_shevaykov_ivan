@@ -308,15 +308,6 @@ SELECT hotel.cleaningupd(_src := '
 {"data" : null}
 ```
 
-### Добавления сотрудников на уборку (CleaningUpdSystem)
-```sql
-SELECT hotel.cleaningupdsystem(_ch_employee := 2);
-```
-Пример ответа при правильном выполнении:
-```jsonb
-{"data" : null}
-```
-
 ### Добавления вещей к уборке (CleaningThingUpd)
 ```sql
 SELECT hotel.cleaningthingupd(_src := '
@@ -346,7 +337,8 @@ SELECT hotel.salesupd(_src := '
                           }
                         ],
                         "reservation_id": 1,
-                        "typefeed_id": 2
+                        "typefeed_id": 2,
+                        "cash": 0
                       }
                       ',_ch_employee :=  2);
 ```
@@ -644,12 +636,12 @@ SELECT hotel.roomsget(_room_id := null, _type_id := null, _level := null);
 ### Вывод сотрудников (SalesGet)
 На вход есть необязательные параметры, с их помощью осуществляется фильтрация данных.
 
-| Название столбца | Тип данных | Описание                                |
-|:----------------:|:----------:|:----------------------------------------|
-|     _sale_id     |    INT     | Индивидуальный номер продаж             |
-|   _employee_id   |    INT     | Индивидуальный номер сотрудника         |
-| _reservation_id  |    INT     | Индивидуальный номер брони              |
-|    _review_id    |    INT     | Индивидуальный номер отзыва (если есть) |
+| Название столбца | Тип данных | Описание                        |
+|:----------------:|:----------:|:--------------------------------|
+|     _sale_id     |    INT     | Индивидуальный номер продаж     |
+|   _employee_id   |    INT     | Индивидуальный номер сотрудника |
+| _reservation_id  |    INT     | Индивидуальный номер брони      |
+|    _review_id    |    INT     | Индивидуальный номер отзыва     |
 ```sql
 SELECT hotel.salesget( _sale_id := null, _employee_id := null, _reservation_id := null, _review_id := 1);
 ```
