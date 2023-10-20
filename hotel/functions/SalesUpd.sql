@@ -80,11 +80,17 @@ BEGIN
                  SET cashback_points = gl.cashback_points + _sale * (SELECT hi.loyalty_percent
                                                                      FROM public.hotelinfo hi
                                                                      ORDER BY hi.id_settings DESC
-                                                                     LIMIT 1)
+                                                                     LIMIT 1),
+                     dt_use          = _dt_ch,
+                     dt_ch           = _dt_ch,
+                     ch_employee     = _ch_employee
                  WHERE gl.card_id = _card_id;
 
         ELSE
-            UPDATE customerresources.guestloyalty gl SET cashback_points = gl.cashback_points - _cash
+            UPDATE customerresources.guestloyalty gl SET cashback_points = gl.cashback_points - _cash,
+                                                         dt_use          = _dt_ch,
+                                                         dt_ch           = _dt_ch,
+                                                         ch_employee     = _ch_employee
             WHERE gl.card_id = _card_id;
 
             SELECT _sale - _cash
