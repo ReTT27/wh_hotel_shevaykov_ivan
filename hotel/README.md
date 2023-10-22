@@ -295,6 +295,17 @@ SELECT hotel.salesupd(_src := '
 ```jsonb
 {"data" : null}
 ```
+Пример ошибок:
+```jsonb
+{
+	"errors": [
+	{
+		"error": "hotel.sales_ins.cash",
+		"detail": "cash = -19",
+		"message": "Кешбэк введен не верно!"
+	}]
+}
+```
 
 ### Добавления отзыва (ReviewsUpd)
 ```sql
