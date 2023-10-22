@@ -7,8 +7,8 @@ DECLARE
     _reservation_id INT;
     _room_id        SMALLINT;
     _guest_id       INT;
-    _dt_entry       TIMESTAMPTZ;
-    _dt_exit        TIMESTAMPTZ;
+    _dt_entry       DATE;
+    _dt_exit        DATE;
     _is_reserved    BOOLEAN;
     _dt_ch          TIMESTAMPTZ := now() AT TIME ZONE 'Europe/Moscow';
 BEGIN
