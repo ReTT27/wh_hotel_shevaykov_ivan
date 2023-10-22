@@ -64,6 +64,21 @@ SELECT customerresources.guestupd(_src := '
 {"data" : null}
 ```
 
+### Изменение карты (GuestLoyaltyUpd)
+```sql
+SELECT customerresources.guestloyaltyupd(_src :=  '
+                                  {
+                                    "card_id": 2,
+                                    "is_actual": false
+                                  }
+                                  ',
+                                        _ch_employee := 2);
+```
+Пример ответа при правильном выполнении:
+```jsonb
+{"data" : null}
+```
+
 ### Вывод гостя (GuestGet)
 На вход есть необязательные параметры, с их помощью осуществляется фильтрация данных.
 

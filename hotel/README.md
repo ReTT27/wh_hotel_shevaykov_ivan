@@ -38,8 +38,8 @@
 |  reservation_id  |     INT     | Индивидуальный номер брони                               |
 |     room_id      |  SMALLINT   | Индивидуальный номер гостиничного номера                 |
 |     guest_id     |     INT     | Индивидуальный номер гостя                               |
-|     dt_entry     | TIMESTAMPTZ | Дата въезда                                              |
-|     dt_exit      | TIMESTAMPTZ | Дата выезда                                              |
+|     dt_entry     |    DATE     | Дата въезда                                              |
+|     dt_exit      |    DATE     | Дата выезда                                              |
 |   is_reserved    |   BOOLEAN   | Завершилась ли бронь (TRUE - да, FALSE - нет)            |
 |   ch_employee    |     INT     | Индивидуальный номер сотрудника, который изменяет запись |
 |      dt_ch       | TIMESTAMPTZ | Дата изменения записи                                    |
@@ -187,8 +187,8 @@ SELECT hotel.reservationupd(_src := '
                          {
                               "room_id": 11,
                               "guest_id": 2,
-                              "dt_entry": "2023-10-15 14:00:00",
-                              "dt_exit": "2023-10-18 12:00:00",
+                              "dt_entry": "2023-10-15",
+                              "dt_exit": "2023-10-18",
                               "is_reserved": true
                          }
                          ', _ch_employee := 2);
@@ -203,7 +203,7 @@ SELECT hotel.reservationupd(_src := '
 	"errors": [
 	    {
 		    "error": "hotel.reservation_ins.date",
-		    "detail": "dt_entry = 2023-10-19 14:00:00+00 dt_exit = 2023-10-18 12:00:00+00",
+		    "detail": "dt_entry = 2023-10-19 dt_exit = 2023-10-18",
 		    "message": "Даты въезда и выезда некорректны!"
 	    }
 	]

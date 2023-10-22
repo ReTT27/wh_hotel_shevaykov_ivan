@@ -7,8 +7,8 @@ DECLARE
     _reservation_id INT;
     _room_id        SMALLINT;
     _guest_id       INT;
-    _dt_entry       TIMESTAMPTZ;
-    _dt_exit        TIMESTAMPTZ;
+    _dt_entry       DATE;
+    _dt_exit        DATE;
     _is_reserved    BOOLEAN;
     _dt_ch          TIMESTAMPTZ := now() AT TIME ZONE 'Europe/Moscow';
 BEGIN
@@ -28,8 +28,8 @@ BEGIN
     FROM jsonb_to_record(_src) AS s (reservation_id INT,
                                      room_id        SMALLINT,
                                      guest_id       INT,
-                                     dt_entry       TIMESTAMPTZ,
-                                     dt_exit        TIMESTAMPTZ,
+                                     dt_entry       DATE,
+                                     dt_exit        DATE,
                                      is_reserved    BOOLEAN)
              LEFT JOIN hotel.reservation r
                        ON r.reservation_id = s.reservation_id;
