@@ -35,7 +35,7 @@ BEGIN
              LEFT JOIN customerresources.guest g
                  ON g.guest_id = s.guest_id
              LEFT JOIN customerresources.guestloyalty gl
-                 ON gl.card_id = s.card_id;
+                 ON gl.card_id = s.card_id AND gl.is_actual = TRUE;
 
     INSERT INTO customerresources.guestloyalty AS gl (card_id,
                                                       cashback_points,

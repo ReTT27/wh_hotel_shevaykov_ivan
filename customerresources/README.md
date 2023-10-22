@@ -46,18 +46,6 @@ SELECT customerresources.guestupd(_src := '
 ```jsonb
 {"data" : null}
 ```
-Примеры ошибок:
-```jsonb 
-{
-	"errors": [
-	    {
-		    "error": "customerresources.guest_ins.phone_exists",
-		    "detail": "phone = 89991232212",
-		    "message": "Такой номер телефона уже принадлежит другому пользователю!"
-	    }
-	]
-}
-```
 
 ### Изменение гостя (GuestUpd)
 ```sql
@@ -74,18 +62,6 @@ SELECT customerresources.guestupd(_src := '
 Пример ответа при правильном выполнении:
 ```jsonb
 {"data" : null}
-```
-Примеры ошибок:
-```jsonb 
-{
-	"errors": [
-	    {
-		    "error": "customerresources.guest_ins.phone_exists",
-		    "detail": "phone = 89991232233",
-		    "message": "Такой номер телефона уже принадлежит этому пользователю!"
-	    }
-	]
-}
 ```
 
 ### Вывод гостя (GuestGet)

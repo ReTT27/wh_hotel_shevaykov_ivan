@@ -70,7 +70,7 @@ BEGIN
     WHERE res.reservation_id = _reservation_id;
 
     CASE
-        WHEN (_cash > _cash_c OR _cash > _sale)
+        WHEN (_cash > _cash_c OR _cash > _sale OR _cash < 0)
             THEN RETURN public.errmessage(_errcode := 'hotel.sales_ins.cash',
                                           _msg     := 'Кешбэк введен не верно!',
                                           _detail  := concat('cash = ', _cash));
