@@ -28,8 +28,8 @@ BEGIN
     FROM jsonb_to_record(_src) AS s (reservation_id INT,
                                      room_id        SMALLINT,
                                      guest_id       INT,
-                                     dt_entry       TIMESTAMPTZ,
-                                     dt_exit        TIMESTAMPTZ,
+                                     dt_entry       DATE,
+                                     dt_exit        DATE,
                                      is_reserved    BOOLEAN)
              LEFT JOIN hotel.reservation r
                        ON r.reservation_id = s.reservation_id;

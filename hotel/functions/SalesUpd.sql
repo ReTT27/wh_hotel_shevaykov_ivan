@@ -46,7 +46,7 @@ BEGIN
     SELECT jsonb_array_length(_visitors)
     INTO _count_visitors;
 
-    SELECT r.dt_exit::DATE - r.dt_entry::DATE
+    SELECT r.dt_exit - r.dt_entry
     INTO _day
     FROM hotel.reservation r
     WHERE r.reservation_id = _reservation_id;

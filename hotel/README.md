@@ -38,8 +38,8 @@
 |  reservation_id  |     INT     | Индивидуальный номер брони                               |
 |     room_id      |  SMALLINT   | Индивидуальный номер гостиничного номера                 |
 |     guest_id     |     INT     | Индивидуальный номер гостя                               |
-|     dt_entry     | TIMESTAMPTZ | Дата въезда                                              |
-|     dt_exit      | TIMESTAMPTZ | Дата выезда                                              |
+|     dt_entry     |    DATE     | Дата въезда                                              |
+|     dt_exit      |    DATE     | Дата выезда                                              |
 |   is_reserved    |   BOOLEAN   | Завершилась ли бронь (TRUE - да, FALSE - нет)            |
 |   ch_employee    |     INT     | Индивидуальный номер сотрудника, который изменяет запись |
 |      dt_ch       | TIMESTAMPTZ | Дата изменения записи                                    |
