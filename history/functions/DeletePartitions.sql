@@ -10,7 +10,7 @@ BEGIN
     SELECT ARRAY_AGG(c.relname)
     INTO _name_part
     FROM pg_catalog.pg_inherits i
-             INNER JOIN pg_catalog.pg_class c on c.oid = i.inhrelid
+             INNER JOIN pg_catalog.pg_class c ON c.oid = i.inhrelid
     WHERE DATE_TRUNC('month', SPLIT_PART(PG_GET_EXPR(c.relpartbound, c.oid, TRUE), 'TO', 2)::DATE) <=
           DATE_TRUNC('month', NOW() - INTERVAL '3 month')::DATE
       AND i.inhparent::REGCLASS::TEXT = CONCAT('history.',_name_inh);
