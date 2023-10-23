@@ -16,10 +16,10 @@ DECLARE
     _card_id        INT;
     _cash_c         SMALLINT;
     _cash           SMALLINT;
-    _dt_ch          TIMESTAMPTZ := now() AT TIME ZONE 'Europe/Moscow';
+    _dt_ch          TIMESTAMPTZ := NOW() AT TIME ZONE 'Europe/Moscow';
 BEGIN
 
-    SELECT COALESCE(sal.sale_id, nextval('hotel.salessq')) AS sale_id,
+    SELECT COALESCE(sal.sale_id, NEXTVAL('hotel.salessq')) AS sale_id,
            s.employee_id,
            s.visitors,
            s.reservation_id,
@@ -33,17 +33,17 @@ BEGIN
          _typefeed_id,
          _review_id,
          _cash
-    FROM jsonb_to_record(_src) AS s (sale_id        INT,
-                                     employee_id    INT,
-                                     visitors       JSONB,
-                                     reservation_id INT,
-                                     typefeed_id    SMALLINT,
-                                     review_id      INT,
-                                     cash           SMALLINT)
+    FROM JSONB_TO_RECORD(_src) AS s(sale_id        INT,
+                                    employee_id    INT,
+                                    visitors       JSONB,
+                                    reservation_id INT,
+                                    typefeed_id    SMALLINT,
+                                    review_id      INT,
+                                    cash           SMALLINT)
              LEFT JOIN hotel.sales sal
                  ON s.sale_id = sal.sale_id;
 
-    SELECT jsonb_array_length(_visitors)
+    SELECT JSONB_ARRAY_LENGTH(_visitors)
     INTO _count_visitors;
 
     SELECT r.dt_exit - r.dt_entry
@@ -55,9 +55,9 @@ BEGIN
     INTO _sale
     FROM dictionary.typefeed tf,
          hotel.reservation res
-             INNER JOIN hotel.rooms r on r.room_id = res.room_id
-             INNER JOIN dictionary.typerooms tr on r.type_id = tr.type_id
-    WHERE tf.typefeed_id = _typefeed_id
+             INNER JOIN hotel.rooms r ON r.room_id = res.room_id
+             INNER JOIN dictionary.typerooms tr ON r.type_id = tr.type_id
+    WHERE tf.typefeed_id     = _typefeed_id
       AND res.reservation_id = _reservation_id;
 
     SELECT gly.card_id,
@@ -73,7 +73,7 @@ BEGIN
         WHEN (_cash > _cash_c OR _cash > _sale OR _cash < 0)
             THEN RETURN public.errmessage(_errcode := 'hotel.sales_ins.cash',
                                           _msg     := 'Кешбэк введен не верно!',
-                                          _detail  := concat('cash = ', _cash));
+                                          _detail  := CONCAT('cash = ', _cash));
 
         WHEN (_cash = 0)
             THEN
@@ -100,15 +100,15 @@ BEGIN
     END CASE;
 
     WITH ins_cte AS (
-        INSERT INTO hotel.sales AS s (sale_id,
-                                      employee_id,
-                                      visitors,
-                                      reservation_id,
-                                      typefeed_id,
-                                      review_id,
-                                      sale,
-                                      dt_ch,
-                                      ch_employee)
+        INSERT INTO hotel.sales AS s(sale_id,
+                                     employee_id,
+                                     visitors,
+                                     reservation_id,
+                                     typefeed_id,
+                                     review_id,
+                                     sale,
+                                     dt_ch,
+                                     ch_employee)
             SELECT _sale_id,
                    _employee_id,
                    _visitors,
@@ -120,15 +120,15 @@ BEGIN
                    _ch_employee
         RETURNING s.*)
 
-    INSERT INTO history.saleschanges AS sc (sale_id,
-                                            employee_id,
-                                            visitors,
-                                            reservation_id,
-                                            typefeed_id,
-                                            review_id,
-                                            sale,
-                                            dt_ch,
-                                            ch_employee)
+    INSERT INTO history.saleschanges AS sc(sale_id,
+                                           employee_id,
+                                           visitors,
+                                           reservation_id,
+                                           typefeed_id,
+                                           review_id,
+                                           sale,
+                                           dt_ch,
+                                           ch_employee)
     SELECT ic.sale_id,
            ic.employee_id,
            ic.visitors,

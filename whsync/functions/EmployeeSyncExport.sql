@@ -4,7 +4,7 @@ CREATE OR REPLACE FUNCTION whsync.employeesyncexport(_log_id BIGINT) RETURNS JSO
 AS
 $$
 DECLARE
-    _dt  TIMESTAMPTZ := now() AT TIME ZONE 'Europe/Moscow';
+    _dt  TIMESTAMPTZ := NOW() AT TIME ZONE 'Europe/Moscow';
     _res JSONB;
 BEGIN
     DELETE FROM whsync.employeesync es

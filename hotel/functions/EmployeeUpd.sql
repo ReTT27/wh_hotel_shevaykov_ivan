@@ -11,10 +11,10 @@ DECLARE
     _position_id SMALLINT;
     _reward      NUMERIC(7, 2);
     _is_deleted  BOOLEAN;
-    _dt_ch       TIMESTAMPTZ := now() AT TIME ZONE 'Europe/Moscow';
+    _dt_ch       TIMESTAMPTZ := NOW() AT TIME ZONE 'Europe/Moscow';
 BEGIN
 
-    SELECT COALESCE(e.employee_id, nextval('hotel.employeesq')) AS employee_id,
+    SELECT COALESCE(e.employee_id, NEXTVAL('hotel.employeesq')) AS employee_id,
            s.name,
            s.phone,
            s.email,
@@ -28,26 +28,26 @@ BEGIN
          _position_id,
          _reward,
          _is_deleted
-    FROM jsonb_to_record(_src) AS s (employee_id INT,
-                                     name        VARCHAR(64),
-                                     phone       VARCHAR(11),
-                                     email       VARCHAR(32),
-                                     position_id SMALLINT,
-                                     reward      NUMERIC(7, 2),
-                                     is_deleted  BOOLEAN)
+    FROM JSONB_TO_RECORD(_src) AS s(employee_id INT,
+                                    name        VARCHAR(64),
+                                    phone       VARCHAR(11),
+                                    email       VARCHAR(32),
+                                    position_id SMALLINT,
+                                    reward      NUMERIC(7, 2),
+                                    is_deleted  BOOLEAN)
              LEFT JOIN hotel.employee e
                        ON e.employee_id = s.employee_id;
 
     WITH ins_cte AS (
-        INSERT INTO hotel.employee AS e (employee_id,
-                                         name,
-                                         phone,
-                                         email,
-                                         position_id,
-                                         reward,
-                                         is_deleted,
-                                         dt_ch,
-                                         ch_employee)
+        INSERT INTO hotel.employee AS e(employee_id,
+                                        name,
+                                        phone,
+                                        email,
+                                        position_id,
+                                        reward,
+                                        is_deleted,
+                                        dt_ch,
+                                        ch_employee)
             SELECT _employee_id,
                    _name,
                    _phone,
@@ -58,24 +58,24 @@ BEGIN
                    _dt_ch,
                    _ch_employee
             ON CONFLICT (employee_id) DO UPDATE
-                SET name        = excluded.name,
-                    phone       = excluded.phone,
-                    email       = excluded.email,
-                    position_id = excluded.position_id,
-                    reward      = excluded.reward,
-                    is_deleted  = excluded.is_deleted,
-                    dt_ch       = excluded.dt_ch,
-                    ch_employee = excluded.ch_employee
+                SET name        = EXCLUDED.name,
+                    phone       = EXCLUDED.phone,
+                    email       = EXCLUDED.email,
+                    position_id = EXCLUDED.position_id,
+                    reward      = EXCLUDED.reward,
+                    is_deleted  = EXCLUDED.is_deleted,
+                    dt_ch       = EXCLUDED.dt_ch,
+                    ch_employee = EXCLUDED.ch_employee
         RETURNING e.*)
-        , ins_his AS (INSERT INTO history.employeechanges AS ec (employee_id,
-                                                                 name,
-                                                                 phone,
-                                                                 email,
-                                                                 position_id,
-                                                                 reward,
-                                                                 is_deleted,
-                                                                 dt_ch,
-                                                                 ch_employee)
+        , ins_his AS (INSERT INTO history.employeechanges AS ec(employee_id,
+                                                                name,
+                                                                phone,
+                                                                email,
+                                                                position_id,
+                                                                reward,
+                                                                is_deleted,
+                                                                dt_ch,
+                                                                ch_employee)
                             SELECT ic.employee_id,
                                    ic.name,
                                    ic.phone,
@@ -87,15 +87,15 @@ BEGIN
                                    ic.ch_employee
                             FROM ins_cte ic)
 
-    INSERT INTO whsync.employeesync AS es (employee_id,
-                                           name,
-                                           phone,
-                                           email,
-                                           position_id,
-                                           reward,
-                                           is_deleted,
-                                           dt_ch,
-                                           ch_employee)
+    INSERT INTO whsync.employeesync AS es(employee_id,
+                                          name,
+                                          phone,
+                                          email,
+                                          position_id,
+                                          reward,
+                                          is_deleted,
+                                          dt_ch,
+                                          ch_employee)
     SELECT ic.employee_id,
            ic.name,
            ic.phone,

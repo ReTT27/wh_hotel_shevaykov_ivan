@@ -6,15 +6,15 @@ $$
 DECLARE
     _card_id   INT;
     _is_actual BOOLEAN;
-    _dt_ch     TIMESTAMPTZ := now() AT TIME ZONE 'Europe/Moscow';
+    _dt_ch     TIMESTAMPTZ := NOW() AT TIME ZONE 'Europe/Moscow';
 BEGIN
 
     SELECT s.card_id,
            s.is_actual
     INTO _card_id,
          _is_actual
-    FROM jsonb_to_record(_src) AS s (card_id   INT,
-                                     is_actual BOOLEAN);
+    FROM JSONB_TO_RECORD(_src) AS s(card_id   INT,
+                                    is_actual BOOLEAN);
 
     UPDATE customerresources.guestloyalty gl
     SET is_actual   = FALSE,

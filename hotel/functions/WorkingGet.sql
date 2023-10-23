@@ -10,7 +10,7 @@ BEGIN
                  w.employee_id,
                  w.dt_touches
           FROM hotel.working w
-          WHERE w.employee_id = COALESCE(_employee_id, w.employee_id)
+          WHERE w.employee_id      = COALESCE(_employee_id, w.employee_id)
             AND w.dt_touches::DATE = COALESCE(_dt_touches, w.dt_touches::DATE)) res;
 
 END
