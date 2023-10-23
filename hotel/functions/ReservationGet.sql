@@ -5,7 +5,7 @@ AS
 $$
 BEGIN
 
-    RETURN JSONB_BUILD_OBJECT('data', jsonb_agg(row_to_json(res)))
+    RETURN JSONB_BUILD_OBJECT('data', JSONB_AGG(ROW_TO_JSON(res)))
     FROM (SELECT r.reservation_id,
                  r.room_id,
                  r.guest_id,

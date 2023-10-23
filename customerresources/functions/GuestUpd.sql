@@ -11,38 +11,38 @@ DECLARE
     _birth_day       DATE;
     _card_id         INT;
     _cashback_points INT         := 0;
-    _dt_ch           TIMESTAMPTZ := now() AT TIME ZONE 'Europe/Moscow';
+    _dt_ch           TIMESTAMPTZ := NOW() AT TIME ZONE 'Europe/Moscow';
 BEGIN
 
-    SELECT COALESCE(g.guest_id, nextval('customerresources.guestsq'))        AS guest_id,
+    SELECT COALESCE(g.guest_id, NEXTVAL('customerresources.guestsq'))        AS guest_id,
            s.name,
            s.phone,
            s.email,
            s.birth_day,
-           COALESCE(gl.card_id, nextval('customerresources.guestloyaltysq')) AS card_id
+           COALESCE(gl.card_id, NEXTVAL('customerresources.guestloyaltysq')) AS card_id
     INTO _guest_id,
          _name,
          _phone,
          _email,
          _birth_day,
          _card_id
-    FROM jsonb_to_record(_src) AS s (guest_id  INT,
-                                     name      VARCHAR(64),
-                                     phone     VARCHAR(11),
-                                     email     VARCHAR(32),
-                                     birth_day DATE,
-                                     card_id   INT)
+    FROM JSONB_TO_RECORD(_src) AS s(guest_id  INT,
+                                    name      VARCHAR(64),
+                                    phone     VARCHAR(11),
+                                    email     VARCHAR(32),
+                                    birth_day DATE,
+                                    card_id   INT)
              LEFT JOIN customerresources.guest g
                  ON g.guest_id = s.guest_id
              LEFT JOIN customerresources.guestloyalty gl
                  ON gl.card_id = s.card_id AND gl.is_actual = TRUE;
 
-    INSERT INTO customerresources.guestloyalty AS gl (card_id,
-                                                      cashback_points,
-                                                      dt_registration,
-                                                      dt_use,
-                                                      dt_ch,
-                                                      ch_employee)
+    INSERT INTO customerresources.guestloyalty AS gl(card_id,
+                                                     cashback_points,
+                                                     dt_registration,
+                                                     dt_use,
+                                                     dt_ch,
+                                                     ch_employee)
     SELECT _card_id,
            _cashback_points,
            _dt_ch,
@@ -52,14 +52,14 @@ BEGIN
     ON CONFLICT (card_id) DO NOTHING;
 
     WITH ins_cte AS (
-        INSERT INTO customerresources.guest AS g (guest_id,
-                                                  name,
-                                                  phone,
-                                                  email,
-                                                  birth_day,
-                                                  card_id,
-                                                  dt_ch,
-                                                  ch_employee)
+        INSERT INTO customerresources.guest AS g(guest_id,
+                                                 name,
+                                                 phone,
+                                                 email,
+                                                 birth_day,
+                                                 card_id,
+                                                 dt_ch,
+                                                 ch_employee)
             SELECT _guest_id,
                    _name,
                    _phone,
@@ -69,23 +69,23 @@ BEGIN
                    _dt_ch,
                    _ch_employee
             ON CONFLICT (guest_id) DO UPDATE
-                SET name        = excluded.name,
-                    phone       = excluded.phone,
-                    email       = excluded.email,
-                    birth_day   = excluded.birth_day,
-                    card_id     = excluded.card_id,
-                    dt_ch       = excluded.dt_ch,
-                    ch_employee = excluded.ch_employee
+                SET name        = EXCLUDED.name,
+                    phone       = EXCLUDED.phone,
+                    email       = EXCLUDED.email,
+                    birth_day   = EXCLUDED.birth_day,
+                    card_id     = EXCLUDED.card_id,
+                    dt_ch       = EXCLUDED.dt_ch,
+                    ch_employee = EXCLUDED.ch_employee
             RETURNING g.*)
 
-    INSERT INTO history.guestchanges AS gc (guest_id,
-                                            name,
-                                            phone,
-                                            email,
-                                            birth_day,
-                                            card_id,
-                                            dt_ch,
-                                            ch_employee)
+    INSERT INTO history.guestchanges AS gc(guest_id,
+                                           name,
+                                           phone,
+                                           email,
+                                           birth_day,
+                                           card_id,
+                                           dt_ch,
+                                           ch_employee)
     SELECT ic.guest_id,
            ic.name,
            ic.phone,
