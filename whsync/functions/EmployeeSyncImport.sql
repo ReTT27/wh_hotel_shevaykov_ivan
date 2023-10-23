@@ -77,6 +77,6 @@ BEGIN
            it.dt_ch
     FROM inc_t it;
 
-    RETURN JSONB_BUILD_OBJECT('data',NULL);
+    RETURN JSONB_BUILD_OBJECT('data', NULL);
 END
 $$;

@@ -27,6 +27,6 @@ BEGIN
              EXECUTE FORMAT('DROP TABLE history.%I', _name_part[i]);
         END LOOP;
 
-    RETURN JSONB_BUILD_OBJECT('data', null);
+    RETURN JSONB_BUILD_OBJECT('data', NULL);
 END
 $$;
